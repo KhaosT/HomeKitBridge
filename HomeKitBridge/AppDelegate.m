@@ -53,7 +53,7 @@
 }
 
 - (IBAction)closeApp:(id)sender {
-    [[NSApplication sharedApplication] terminate:self];
+    [[NSApplication sharedApplication] hide:self];
 }
 
 @end
