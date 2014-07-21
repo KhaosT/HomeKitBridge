@@ -4,7 +4,7 @@
 //     class-dump is Copyright (C) 1997-1998, 2000-2001, 2004-2013 by Steve Nygard.
 //
 
-#import <HAPAccessoryKit/HAKService.h>
+#import "HAKService.h"
 
 @class HAKCurrentDoorStateCharacteristic, HAKLockedCharacteristic, HAKNameCharacteristic, HAKObstructionDetectedCharacteristic, HAKTargetDoorStateCharacteristic;
 
@@ -12,7 +12,7 @@
 {
 }
 
-+ (id)identifiers;
++ (id)type;
 @property(retain, nonatomic) HAKNameCharacteristic *nameCharacteristic;
 @property(retain, nonatomic) HAKLockedCharacteristic *lockedCharacteristic;
 @property(readonly, nonatomic) HAKObstructionDetectedCharacteristic *obstructionDetectedCharacteristic;

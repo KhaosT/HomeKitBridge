@@ -6,6 +6,7 @@
 
 #import "HAKCharacteristic.h"
 
+
 @class NSNumber;
 
 @interface HAKNumberCharacteristic : HAKCharacteristic <NSCoding>
@@ -18,7 +19,7 @@
 @property(retain, nonatomic) NSNumber *stepValue; // @synthesize stepValue=_stepValue;
 @property(retain, nonatomic) NSNumber *maximumValue; // @synthesize maximumValue=_maximumValue;
 @property(retain, nonatomic) NSNumber *minimumValue; // @synthesize minimumValue=_minimumValue;
-- (id)constraintsDictionaryValue;
+- (id)JSONObject;
 @property(retain) NSNumber *numberValue;
 - (void)encodeWithCoder:(id)arg1;
 - (id)initWithCoder:(id)arg1;

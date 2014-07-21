@@ -4,19 +4,19 @@
 //     class-dump is Copyright (C) 1997-1998, 2000-2001, 2004-2013 by Steve Nygard.
 //
 
-#import <HAPAccessoryKit/HAKStringCharacteristic.h>
+#import "HAKUnsignedCharCharacteristic.h"
 
 #import "HAKVersioning.h"
 
-@interface HAKCurrentHeatingCoolingModeCharacteristic : HAKStringCharacteristic <HAKVersioning>
+@interface HAKCurrentHeatingCoolingModeCharacteristic : HAKUnsignedCharCharacteristic <HAKVersioning>
 {
 }
 
-+ (unsigned long long)enumValueForString:(id)arg1;
 + (id)forwardingClassNames;
 + (unsigned long long)archiveVersion;
-+ (id)identifiers;
-@property(nonatomic) unsigned long long currentHeatingCoolingMode;
++ (unsigned long long)properties;
++ (id)type;
+@property(nonatomic) unsigned char currentHeatingCoolingMode;
 - (id)initWithCoder:(id)arg1;
 - (id)init;
 

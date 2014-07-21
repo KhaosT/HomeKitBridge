@@ -4,7 +4,7 @@
 //     class-dump is Copyright (C) 1997-1998, 2000-2001, 2004-2013 by Steve Nygard.
 //
 
-#import <HAPAccessoryKit/HAKHTTPMessage.h>
+#import "HAKHTTPMessage.h>
 
 @class NSString, NSURL;
 
@@ -12,6 +12,7 @@
 {
 }
 
+@property(readonly) BOOL isComplete;
 @property(readonly) BOOL isBodyComplete;
 @property(readonly) unsigned long long bodyLength;
 @property(readonly) NSURL *url;

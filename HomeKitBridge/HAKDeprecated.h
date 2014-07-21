@@ -4,13 +4,17 @@
 //     class-dump is Copyright (C) 1997-1998, 2000-2001, 2004-2013 by Steve Nygard.
 //
 
-@import Foundation;
 
-@protocol HAKVersioning <NSCoding>
+#import "HAKVersioning.h"
+
+@interface HAKDeprecated : NSObject <HAKVersioning>
+{
+}
+
++ (id)forwardingClassNames;
 + (unsigned long long)archiveVersion;
+- (void)encodeWithCoder:(id)arg1;
+- (id)initWithCoder:(id)arg1;
 
-@optional
-+ (NSArray *)forwardingClassNames;
-+ (unsigned long long)minimumArchiveVersion;
 @end
 

@@ -4,7 +4,6 @@
 //     class-dump is Copyright (C) 1997-1998, 2000-2001, 2004-2013 by Steve Nygard.
 //
 
-#import "NSObject.h"
 
 @class NSData, NSDate, NSDictionary, NSString;
 
@@ -13,8 +12,8 @@
     struct __CFHTTPMessage *_message;
 }
 
++ (id)dateFormatter;
 @property(readonly) NSDate *date;
-- (id)dateFormatter;
 @property(readonly) NSString *contentType;
 @property(readonly) unsigned long long contentLength;
 - (id)serialize;
@@ -27,6 +26,7 @@
 - (id)description;
 - (void)dealloc;
 @property(readonly) NSData *tlv8Data;
+@property(readonly) id JSONObject;
 
 @end
 

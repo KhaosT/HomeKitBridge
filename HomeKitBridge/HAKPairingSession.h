@@ -4,7 +4,6 @@
 //     class-dump is Copyright (C) 1997-1998, 2000-2001, 2004-2013 by Steve Nygard.
 //
 
-#import "NSObject.h"
 
 @class HAKPairSetupSession, HAKPairVerifySession;
 
@@ -17,7 +16,6 @@
 
 @property(nonatomic) __weak id <HAKPairingSessionDelegate> pairingDelegate; // @synthesize pairingDelegate=_pairingDelegate;
 @property(readonly, nonatomic) HAKPairVerifySession *pairVerifySession; // @synthesize pairVerifySession=_pairVerifySession;
-- (void).cxx_destruct;
 - (id)handlePairVerify:(id)arg1;
 - (id)handlePairSetup:(id)arg1;
 - (id)init;

@@ -4,11 +4,12 @@
 //     class-dump is Copyright (C) 1997-1998, 2000-2001, 2004-2013 by Steve Nygard.
 //
 
-@import Foundation;
 
 @class HAKCharacteristic, HAKService;
 
 @protocol HAKServiceDelegate <NSObject>
+
+@optional
 - (void)service:(HAKService *)arg1 didUpdateCharacteristic:(HAKCharacteristic *)arg2 value:(id)arg3;
 - (void)service:(HAKService *)arg1 didRemoveCharacteristic:(HAKCharacteristic *)arg2;
 - (void)service:(HAKService *)arg1 didAddCharacteristic:(HAKCharacteristic *)arg2;

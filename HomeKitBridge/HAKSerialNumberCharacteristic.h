@@ -12,7 +12,8 @@
 {
 }
 
-+ (id)identifiers;
++ (unsigned long long)properties;
++ (id)type;
 @property(retain) NSString *serialNumber;
 - (id)init;
 

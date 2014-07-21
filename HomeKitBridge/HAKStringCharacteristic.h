@@ -6,6 +6,7 @@
 
 #import "HAKCharacteristic.h"
 
+
 @class NSNumber, NSString;
 
 @interface HAKStringCharacteristic : HAKCharacteristic <NSCopying, NSCoding>
@@ -14,12 +15,12 @@
 }
 
 @property(retain, nonatomic) NSNumber *maximumLength; // @synthesize maximumLength=_maximumLength;
-- (id)constraintsDictionaryValue;
+- (id)JSONObject;
 @property(retain) NSString *stringValue;
 - (void)encodeWithCoder:(id)arg1;
 - (id)initWithCoder:(id)arg1;
 - (id)copyWithZone:(struct _NSZone *)arg1;
-- (id)initWithTypes:(id)arg1;
+- (id)initWithType:(id)arg1 properties:(unsigned long long)arg2;
 
 @end
 

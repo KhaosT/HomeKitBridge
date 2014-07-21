@@ -4,7 +4,7 @@
 //     class-dump is Copyright (C) 1997-1998, 2000-2001, 2004-2013 by Steve Nygard.
 //
 
-#import <HAPAccessoryKit/HAKHTTPMessage.h>
+#import "HAKHTTPMessage.h>
 
 @class NSData, NSDate, NSString;
 
@@ -14,7 +14,6 @@
 }
 
 @property(readonly) NSString *statusDescription; // @synthesize statusDescription=_statusDescription;
-- (void).cxx_destruct;
 - (void)setDateToNow;
 @property(retain) NSDate *date;
 @property(retain) NSString *contentType;
@@ -26,6 +25,7 @@
 - (id)initWithStatusCode:(unsigned long long)arg1 statusDescription:(id)arg2 httpVersion:(id)arg3;
 - (id)initWithStatusCode:(unsigned long long)arg1;
 - (id)init;
+@property(retain) id JSONObject;
 @property(retain) NSData *tlv8Data;
 
 @end

@@ -6,7 +6,7 @@
 
 #import "HAKService.h"
 
-#import "HAKVersioning-Protocol.h"
+#import "HAKVersioning.h"
 
 @class HAKIdentifyCharacteristic, HAKManufacturerCharacteristic, HAKModelCharacteristic, HAKNameCharacteristic, HAKSerialNumberCharacteristic;
 
@@ -15,7 +15,7 @@
 }
 
 + (unsigned long long)archiveVersion;
-+ (id)identifiers;
++ (id)type;
 @property(readonly, nonatomic) HAKIdentifyCharacteristic *identifyCharacteristic;
 @property(readonly, nonatomic) HAKSerialNumberCharacteristic *serialNumberCharacteristic;
 @property(readonly, nonatomic) HAKModelCharacteristic *modelCharacteristic;

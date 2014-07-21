@@ -7,8 +7,8 @@
 //
 
 #import <AppKit/AppKit.h>
-#import "HAKServiceDelegate-Protocol.h"
-#import "HAKCharacteristicDelegate-Protocol.h"
+#import "HAKServiceDelegate.h"
+#import "HAKCharacteristicDelegate.h"
 
 @interface OTIContentController : NSObject
 

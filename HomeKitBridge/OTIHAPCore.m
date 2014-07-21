@@ -21,8 +21,8 @@
 #import "HAKSaturationCharacteristic.h"
 #import "HAKOnCharacteristic.h"
 
-#import "HAKTypeIdentifier.h"
-#import "HAKKeychainService.h"
+#import "HAKLightBulbService.h"
+
 
 @interface OTIHAPCore (){
     BOOL        _isBridge;
@@ -153,24 +153,21 @@
     return hueAccessory;
 }
 
-- (HAKService *)setupLightService {
-    HAKTypeIdentifier *type = [[HAKTypeIdentifier alloc]init];
-    type.identifier = @"public.hap.service.lightbulb";
+- (HAKService *)setupLightService {  
+    HAKLightBulbService *service = [[HAKLightBulbService alloc] init];
     
-    HAKService *service = [[HAKService alloc] initWithType:type];
-    
-    HAKNameCharacteristic *name = [[HAKNameCharacteristic alloc]init];
+    HAKNameCharacteristic *name = service.nameCharacteristic;
     name.name = @"Hue Light";
-    HAKBrightnessCharacteristic *brightness = [[HAKBrightnessCharacteristic alloc]init];
+    HAKBrightnessCharacteristic *brightness = service.brightnessCharacteristic;
     brightness.minimumValue = @0;
     brightness.maximumValue = @254;
-    HAKHueCharacteristic *hue = [[HAKHueCharacteristic alloc] init];
+    HAKHueCharacteristic *hue = service.hueCharacteristic;
     hue.minimumValue = @0;
     hue.maximumValue = @65535;
-    HAKSaturationCharacteristic *sat = [[HAKSaturationCharacteristic alloc] init];
+    HAKSaturationCharacteristic *sat = service.saturationCharacteristic;
     sat.minimumValue = @0;
     sat.maximumValue = @254;
-    HAKOnCharacteristic *state = [[HAKOnCharacteristic alloc] init];
+    HAKOnCharacteristic *state = service.onCharacteristic;
     
     [service addCharacteristic:name];
     [service addCharacteristic:brightness];
