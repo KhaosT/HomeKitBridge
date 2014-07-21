@@ -156,6 +156,11 @@
 - (HAKService *)setupLightService {  
     HAKLightBulbService *service = [[HAKLightBulbService alloc] init];
     
+    service.nameCharacteristic = [[HAKNameCharacteristic alloc] init];
+    service.hueCharacteristic = [[HAKHueCharacteristic alloc] init];
+    service.brightnessCharacteristic = [[HAKBrightnessCharacteristic alloc] init];
+    service.saturationCharacteristic = [[HAKSaturationCharacteristic alloc] init];
+    
     HAKNameCharacteristic *name = service.nameCharacteristic;
     name.name = @"Hue Light";
     HAKBrightnessCharacteristic *brightness = service.brightnessCharacteristic;
