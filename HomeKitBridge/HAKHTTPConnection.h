@@ -4,37 +4,33 @@
 //     class-dump is Copyright (C) 1997-1998, 2000-2001, 2004-2013 by Steve Nygard.
 //
 
-#import "NSObject.h"
+#import "HAKConnection.h>
 
-#import "HAKPairVerifySessionDelegate.h"
 #import "NSStreamDelegate.h"
 
-@class HAKPairingSession, HAKSecuritySession, NSInputStream, NSObject<OS_dispatch_queue>, NSOutputStream;
+@class HAKHTTPRequestMessage, HAKSecuritySessionPacket, NSInputStream, NSOutputStream;
 
-@interface HAKHTTPConnection : NSObject <NSStreamDelegate, HAKPairVerifySessionDelegate>
+@interface HAKHTTPConnection : HAKConnection <NSStreamDelegate>
 {
     NSInputStream *_inputStream;
     NSOutputStream *_outputStream;
-    NSObject<OS_dispatch_queue> *_connectionQueue;
-    HAKPairingSession *_pairingSession;
-    HAKSecuritySession *_securitySession;
     id <HAKHTTPConnectionDelegate> _delegate;
-    id <HAKPairingSessionDelegate> _pairingDelegate;
+    HAKSecuritySessionPacket *_currentPacket;
+    HAKHTTPRequestMessage *_currentRequest;
 }
 
-@property(readonly, nonatomic) HAKSecuritySession *securitySession; // @synthesize securitySession=_securitySession;
-@property(nonatomic) __weak id <HAKPairingSessionDelegate> pairingDelegate; // @synthesize pairingDelegate=_pairingDelegate;
+@property(retain, nonatomic) HAKHTTPRequestMessage *currentRequest; // @synthesize currentRequest=_currentRequest;
+@property(retain, nonatomic) HAKSecuritySessionPacket *currentPacket; // @synthesize currentPacket=_currentPacket;
 @property __weak id <HAKHTTPConnectionDelegate> delegate; // @synthesize delegate=_delegate;
-- (void).cxx_destruct;
 - (void)stream:(id)arg1 handleEvent:(unsigned long long)arg2;
-- (void)handleHTTPRequestWithRequestData:(id)arg1;
+- (void)_handleIncomingData:(id)arg1;
+- (void)_handleHTTPRequestData:(id)arg1;
+- (void)_handleCompleteHTTPRequest:(id)arg1;
 - (void)sendResponseMessage:(id)arg1;
-- (void)sendResponseData:(id)arg1;
+- (void)_sendResponseData:(id)arg1;
 - (void)performConnectionWillClose;
 - (BOOL)close;
 - (BOOL)open;
-@property(readonly, nonatomic, getter=isEncrypted) BOOL encrypted;
-- (void)pairingVerified:(id)arg1;
 - (void)dealloc;
 - (id)initWithInputStream:(id)arg1 outputStream:(id)arg2;
 

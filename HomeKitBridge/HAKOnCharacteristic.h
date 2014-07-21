@@ -6,7 +6,7 @@
 
 #import "HAKBoolCharacteristic.h"
 
-#import "HAKVersioning-Protocol.h"
+#import "HAKVersioning.h"
 
 @interface HAKOnCharacteristic : HAKBoolCharacteristic <HAKVersioning>
 {
@@ -14,7 +14,8 @@
 
 + (id)forwardingClassNames;
 + (unsigned long long)archiveVersion;
-+ (id)identifiers;
++ (unsigned long long)properties;
++ (id)type;
 @property(nonatomic, getter=isOn) BOOL on;
 - (id)initWithCoder:(id)arg1;
 - (id)init;

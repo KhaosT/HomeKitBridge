@@ -4,17 +4,16 @@
 //     class-dump is Copyright (C) 1997-1998, 2000-2001, 2004-2013 by Steve Nygard.
 //
 
-#import <HAPAccessoryKit/HAKService.h>
+#import "HAKService.h"
 
-@class HAKEndpointNameCharacteristic, HAKNameCharacteristic, HAKOnCharacteristic;
+@class HAKNameCharacteristic, HAKOnCharacteristic;
 
 @interface HAKSwitchService : HAKService
 {
 }
 
-+ (id)identifiers;
++ (id)type;
 @property(retain, nonatomic) HAKNameCharacteristic *nameCharacteristic;
-@property(readonly, nonatomic) HAKEndpointNameCharacteristic *endpointNameCharacteristic;
 @property(readonly, nonatomic) HAKOnCharacteristic *onCharacteristic;
 - (id)init;
 

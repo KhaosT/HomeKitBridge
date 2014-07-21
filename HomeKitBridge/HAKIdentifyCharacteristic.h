@@ -13,7 +13,10 @@
     NSTimer *_resetTimer;
 }
 
-+ (id)identifiers;
++ (unsigned long long)properties;
++ (id)type;
++ (void)performBlockOnTimerThread:(id)arg1;
++ (void)executeBlockOnTimerThread:(id)arg1;
 + (void)timerThreadMain;
 + (void)createTimerThreadIfNeeded;
 @property(retain) NSTimer *resetTimer; // @synthesize resetTimer=_resetTimer;
@@ -21,7 +24,7 @@
 - (void)scheduleResetTimer;
 - (void)encodeWithCoder:(id)arg1;
 - (id)initWithCoder:(id)arg1;
-- (void)setValue:(id)arg1;
+- (void)handleValueUpdate:(id)arg1 connection:(id)arg2;
 @property(readonly, nonatomic, getter=isIdentifying) BOOL identify;
 - (id)init;
 

@@ -4,8 +4,6 @@
 //     class-dump is Copyright (C) 1997-1998, 2000-2001, 2004-2013 by Steve Nygard.
 //
 
-@import Foundation;
-
 @interface HAKTransportManager : NSObject <NSCopying, NSCoding>
 {
     NSMutableSet *_transports;
@@ -18,7 +16,6 @@
 @property(retain, nonatomic) NSObject<OS_dispatch_queue> *notificationQueue; // @synthesize notificationQueue=_notificationQueue;
 @property(copy, nonatomic) NSString *name; // @synthesize name=_name;
 @property(retain, nonatomic) NSSet *transports; // @synthesize transports=_transports;
-
 - (id)accessories;
 - (void)stopAllTransports;
 - (void)startAllTransports;

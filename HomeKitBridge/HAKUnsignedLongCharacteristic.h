@@ -4,17 +4,13 @@
 //     class-dump is Copyright (C) 1997-1998, 2000-2001, 2004-2013 by Steve Nygard.
 //
 
-#import "HAKCharacteristic.h"
+#import "HAKNumberCharacteristic.h"
 
-
-@class NSArray;
-
-@interface HAKArrayCharacteristic : HAKCharacteristic <NSCoding>
+@interface HAKUnsignedLongCharacteristic : HAKNumberCharacteristic
 {
 }
 
-@property(copy, nonatomic) NSArray *arrayValue;
-- (id)initWithCoder:(id)arg1;
+@property(nonatomic) unsigned long long unsignedLongValue;
 - (id)initWithType:(id)arg1 properties:(unsigned long long)arg2;
 
 @end

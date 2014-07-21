@@ -4,7 +4,7 @@
 //     class-dump is Copyright (C) 1997-1998, 2000-2001, 2004-2013 by Steve Nygard.
 //
 
-#import <HAPAccessoryKit/HAKService.h>
+#import "HAKService.h"
 
 #import "HAKVersioning.h"
 
@@ -17,10 +17,9 @@
 }
 
 + (unsigned long long)archiveVersion;
-+ (id)identifiers;
++ (id)type;
 @property(retain, nonatomic) HAKCoolingThresholdTemperatureCharacteristic *coolingThresholdTemperatureCharacteristic; // @synthesize coolingThresholdTemperatureCharacteristic=_coolingThresholdTemperatureCharacteristic;
 @property(retain, nonatomic) HAKHeatingThresholdTemperatureCharacteristic *heatingThresholdTemperatureCharacteristic; // @synthesize heatingThresholdTemperatureCharacteristic=_heatingThresholdTemperatureCharacteristic;
-- (void).cxx_destruct;
 @property(retain, nonatomic) HAKNameCharacteristic *nameCharacteristic;
 - (id)coolingThresholdTemperature;
 - (id)heatingThresholdTemperature;

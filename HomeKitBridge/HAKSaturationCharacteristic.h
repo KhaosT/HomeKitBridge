@@ -6,14 +6,15 @@
 
 #import "HAKFloatCharacteristic.h"
 
-#import "HAKVersioning-Protocol.h"
+#import "HAKVersioning.h"
 
 @interface HAKSaturationCharacteristic : HAKFloatCharacteristic <HAKVersioning>
 {
 }
 
 + (unsigned long long)archiveVersion;
-+ (id)identifiers;
++ (unsigned long long)properties;
++ (id)type;
 @property(nonatomic) float saturation;
 - (id)initWithCoder:(id)arg1;
 - (id)init;

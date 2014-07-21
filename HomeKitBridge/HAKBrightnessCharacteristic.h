@@ -10,7 +10,8 @@
 {
 }
 
-+ (id)identifiers;
++ (unsigned long long)properties;
++ (id)type;
 @property(nonatomic) long long brightness;
 - (id)initWithCoder:(id)arg1;
 - (id)init;

@@ -4,7 +4,7 @@
 //     class-dump is Copyright (C) 1997-1998, 2000-2001, 2004-2013 by Steve Nygard.
 //
 
-#import <HAPAccessoryKit/HAKKeychainObject.h>
+#import "HAKKeychainObject.h>
 
 @class NSArray, NSData, NSMutableArray;
 
@@ -16,7 +16,6 @@
 
 @property(retain, nonatomic) NSData *secretKey; // @synthesize secretKey=_secretKey;
 @property(retain, nonatomic) NSArray *controllers; // @synthesize controllers=_controllers;
-- (void).cxx_destruct;
 - (void)addController:(id)arg1;
 - (void)removeControllerWithUsername:(id)arg1;
 - (id)controllerWithUsername:(id)arg1;

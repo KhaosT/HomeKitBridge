@@ -4,19 +4,19 @@
 //     class-dump is Copyright (C) 1997-1998, 2000-2001, 2004-2013 by Steve Nygard.
 //
 
-#import "NSObject.h"
 
 @class NSData;
 
 @interface HAKChaChaPolyData : NSObject
 {
-    NSData *_encryptedData;
-    NSData *_authTag;
+    NSData *_data;
 }
 
-@property(retain) NSData *authTag; // @synthesize authTag=_authTag;
-@property(retain) NSData *encryptedData; // @synthesize encryptedData=_encryptedData;
-- (void).cxx_destruct;
+@property(copy, nonatomic) NSData *data; // @synthesize data=_data;
+@property(readonly, nonatomic) NSData *authTag;
+@property(readonly, nonatomic) NSData *encryptedData;
+- (id)description;
+- (id)initWithData:(id)arg1;
 
 @end
 

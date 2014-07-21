@@ -4,31 +4,29 @@
 //     class-dump is Copyright (C) 1997-1998, 2000-2001, 2004-2013 by Steve Nygard.
 //
 
-#import "NSObject.h"
 
-@class HAKControllerKeychainObject, NSData;
+@class HAKAccessoryKeychainObject, NSData;
 
 @interface HAKPairVerifySession : NSObject
 {
     unsigned char _state;
-    NSData *_publicKey;
-    NSData *_controllerPublicKey;
-    NSData *_encryptionKey;
-    HAKControllerKeychainObject *_controllerKeychain;
-    NSData *_sharedSecret;
     id <HAKPairingSessionDelegate> _pairingDelegate;
     id <HAKPairVerifySessionDelegate> _delegate;
+    NSData *_publicKey;
+    NSData *_sharedSecret;
+    HAKAccessoryKeychainObject *_accessoryKeychain;
+    NSData *_controllerPublicKey;
+    NSData *_sessionKey;
 }
 
+@property(retain, nonatomic) NSData *sessionKey; // @synthesize sessionKey=_sessionKey;
+@property(retain, nonatomic) NSData *controllerPublicKey; // @synthesize controllerPublicKey=_controllerPublicKey;
+@property(retain, nonatomic) HAKAccessoryKeychainObject *accessoryKeychain; // @synthesize accessoryKeychain=_accessoryKeychain;
+@property(retain, nonatomic) NSData *sharedSecret; // @synthesize sharedSecret=_sharedSecret;
+@property(retain, nonatomic) NSData *publicKey; // @synthesize publicKey=_publicKey;
+@property(readonly, nonatomic) unsigned char state; // @synthesize state=_state;
 @property __weak id <HAKPairVerifySessionDelegate> delegate; // @synthesize delegate=_delegate;
 @property __weak id <HAKPairingSessionDelegate> pairingDelegate; // @synthesize pairingDelegate=_pairingDelegate;
-@property(readonly, nonatomic) unsigned char state; // @synthesize state=_state;
-@property(readonly, nonatomic) NSData *sharedSecret; // @synthesize sharedSecret=_sharedSecret;
-@property(readonly, nonatomic) HAKControllerKeychainObject *controllerKeychain; // @synthesize controllerKeychain=_controllerKeychain;
-@property(readonly, nonatomic) NSData *encryptionKey; // @synthesize encryptionKey=_encryptionKey;
-@property(readonly, nonatomic) NSData *controllerPublicKey; // @synthesize controllerPublicKey=_controllerPublicKey;
-@property(readonly, nonatomic) NSData *publicKey; // @synthesize publicKey=_publicKey;
-- (void).cxx_destruct;
 - (id)handlePairVerify:(id)arg1;
 
 @end

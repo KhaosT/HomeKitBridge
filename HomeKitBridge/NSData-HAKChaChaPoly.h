@@ -9,9 +9,12 @@
 @interface NSData (HAKChaChaPoly)
 + (id)dataWithUint64:(unsigned long long)arg1;
 + (id)dataWithUint32:(unsigned int)arg1;
++ (id)dataWithUint16:(unsigned short)arg1;
 - (unsigned long long)uint64Value;
 - (unsigned int)uint32Value;
+- (unsigned short)uint16Value;
 - (id)initWithUint64:(unsigned long long)arg1;
 - (id)initWithUint32:(unsigned int)arg1;
+- (id)initWithUint16:(unsigned short)arg1;
 @end
 

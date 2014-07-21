@@ -18,7 +18,7 @@
 - (void)encodeWithCoder:(id)arg1;
 - (id)initWithCoder:(id)arg1;
 - (id)copyWithZone:(struct _NSZone *)arg1;
-- (id)initWithTypes:(id)arg1;
+- (id)initWithType:(id)arg1 properties:(unsigned long long)arg2;
 
 @end
 

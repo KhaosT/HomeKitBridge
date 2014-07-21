@@ -4,7 +4,6 @@
 //     class-dump is Copyright (C) 1997-1998, 2000-2001, 2004-2013 by Steve Nygard.
 //
 
-#import "NSObject.h"
 
 @class NSData, NSString;
 
@@ -16,7 +15,6 @@
 
 @property(retain, nonatomic) NSData *publicKey; // @synthesize publicKey=_publicKey;
 @property(retain, nonatomic) NSString *username; // @synthesize username=_username;
-- (void).cxx_destruct;
 - (id)dictionaryRepresentation;
 - (id)initWithDictionaryRepresentation:(id)arg1;
 

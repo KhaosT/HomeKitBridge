@@ -6,13 +6,14 @@
 
 #import "HAKNumberCharacteristic.h"
 
+
 @interface HAKIntegerCharacteristic : HAKNumberCharacteristic <NSCoding>
 {
 }
 
 @property(nonatomic) long long integerValue;
 - (id)initWithCoder:(id)arg1;
-- (id)initWithTypes:(id)arg1;
+- (id)initWithType:(id)arg1 properties:(unsigned long long)arg2;
 
 @end
 

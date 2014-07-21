@@ -12,7 +12,8 @@
 {
 }
 
-+ (id)identifiers;
++ (unsigned long long)properties;
++ (id)type;
 @property(retain, nonatomic) NSString *model;
 - (id)init;
 

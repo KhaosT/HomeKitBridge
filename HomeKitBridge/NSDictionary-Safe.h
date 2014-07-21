@@ -4,14 +4,11 @@
 //     class-dump is Copyright (C) 1997-1998, 2000-2001, 2004-2013 by Steve Nygard.
 //
 
-#import "NSKeyedArchiver.h"
+#import "NSDictionary.h"
 
-@interface HAKVersionedArchiver : NSKeyedArchiver
-{
-}
-
-+ (id)classVersionTable;
-- (void)finishEncoding;
-
+@interface NSDictionary (Safe)
+- (id)stringForKey:(id)arg1;
+- (id)numberForKey:(id)arg1;
+- (id)arrayForKey:(id)arg1;
 @end
 

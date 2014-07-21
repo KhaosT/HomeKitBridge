@@ -4,50 +4,42 @@
 //     class-dump is Copyright (C) 1997-1998, 2000-2001, 2004-2013 by Steve Nygard.
 //
 
-@import Foundation;
 
-#import "HAKCharacteristicDelegate-Protocol.h"
-#import "HAKVersioning-Protocol.h"
+#import "HAKCharacteristicDelegate.h"
+#import "HAKVersioning.h"
 
-@class HAKAccessory;
+@class HAKAccessory, HAKUUID, NSMutableOrderedSet, NSNumber, NSOrderedSet;
 
 @interface HAKService : NSObject <HAKCharacteristicDelegate, HAKVersioning, NSCopying>
 {
     NSMutableOrderedSet *_characteristics;
-    NSArray *_types;
     id <HAKServiceDelegate> _delegate;
     HAKAccessory *_accessory;
+    HAKUUID *_UUID;
     NSNumber *_instanceID;
-    unsigned long long _characteristicInstanceID;
     NSObject<OS_dispatch_queue> *_notificationQueue;
 }
 
 + (unsigned long long)archiveVersion;
-+ (id)identifiers;
++ (id)type;
 @property(retain, nonatomic) NSObject<OS_dispatch_queue> *notificationQueue; // @synthesize notificationQueue=_notificationQueue;
-@property(nonatomic) unsigned long long characteristicInstanceID; // @synthesize characteristicInstanceID=_characteristicInstanceID;
 @property(copy, nonatomic) NSNumber *instanceID; // @synthesize instanceID=_instanceID;
+@property(retain, nonatomic) HAKUUID *UUID; // @synthesize UUID=_UUID;
 @property(nonatomic) __weak HAKAccessory *accessory; // @synthesize accessory=_accessory;
 @property(nonatomic) __weak id <HAKServiceDelegate> delegate; // @synthesize delegate=_delegate;
 @property(retain, nonatomic) NSOrderedSet *characteristics; // @synthesize characteristics=_characteristics;
-@property(readonly, nonatomic) NSArray *types; // @synthesize types=_types;
-- (id)characteristicWithTypes:(id)arg1;
 - (id)characteristicWithType:(id)arg1;
 - (id)characteristicWithInstanceId:(unsigned long long)arg1;
-- (void)removeAllCharacteristicsWithTypes:(id)arg1;
 - (void)removeAllCharacteristicsWithType:(id)arg1;
 - (void)removeCharacteristic:(id)arg1;
 - (void)addCharacteristic:(id)arg1;
-- (id)dictionaryValue;
-- (BOOL)containsType:(id)arg1;
 - (void)characteristic:(id)arg1 didUpdateValue:(id)arg2;
 - (void)encodeWithCoder:(id)arg1;
 - (id)initWithCoder:(id)arg1;
 - (id)copyWithZone:(struct _NSZone *)arg1;
-- (id)initWithTypes:(id)arg1;
 - (id)initWithType:(id)arg1;
 - (id)init;
-- (id)uti;
+- (id)JSONObject;
 
 @end
 

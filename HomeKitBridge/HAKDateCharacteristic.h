@@ -4,9 +4,8 @@
 //     class-dump is Copyright (C) 1997-1998, 2000-2001, 2004-2013 by Steve Nygard.
 //
 
-#import <HAPAccessoryKit/HAKCharacteristic.h>
+#import "HAKCharacteristic.h"
 
-#import "NSCoding.h"
 
 @class NSDate;
 
@@ -16,7 +15,7 @@
 
 @property(copy, nonatomic) NSDate *dateValue;
 - (id)initWithCoder:(id)arg1;
-- (id)initWithTypes:(id)arg1;
+- (id)initWithType:(id)arg1 properties:(unsigned long long)arg2;
 
 @end
 

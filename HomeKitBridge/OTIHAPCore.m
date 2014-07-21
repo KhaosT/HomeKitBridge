@@ -21,8 +21,6 @@
 #import "HAKSaturationCharacteristic.h"
 #import "HAKOnCharacteristic.h"
 
-#import "HAKTypeIdentifier.h"
-#import "HAKKeychainService.h"
 
 @interface OTIHAPCore (){
     BOOL        _isBridge;
@@ -154,10 +152,7 @@
 }
 
 - (HAKService *)setupLightService {
-    HAKTypeIdentifier *type = [[HAKTypeIdentifier alloc]init];
-    type.identifier = @"public.hap.service.lightbulb";
-    
-    HAKService *service = [[HAKService alloc] initWithType:type];
+    HAKService *service = [[HAKService alloc] initWithType:@"public.hap.service.lightbulb"];
     
     HAKNameCharacteristic *name = [[HAKNameCharacteristic alloc]init];
     name.name = @"Hue Light";

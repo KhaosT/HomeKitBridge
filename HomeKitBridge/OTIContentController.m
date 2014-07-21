@@ -21,7 +21,6 @@
 #import "HAKSaturationCharacteristic.h"
 #import "HAKOnCharacteristic.h"
 
-#import "HAKTypeIdentifier.h"
 #import "HAKKeychainService.h"
 #import <HueSDK_OSX/HueSDK.h>
 
