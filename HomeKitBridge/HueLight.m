@@ -19,6 +19,7 @@
     HAKBrightnessCharacteristic *_brightness;
     HAKHueCharacteristic    *_hue;
     HAKSaturationCharacteristic *_saturation;
+    BOOL                        _pendingUpdate;
 }
 
 @end
@@ -34,6 +35,7 @@
     self = [self init];
     
     if (self) {
+        _pendingUpdate = NO;
         _accessoryCore = core;
         _huelight = hueLight;
         _lightAccesory = [_accessoryCore addAccessory:[self getLightAccessoryWithName:_huelight.name]];
@@ -69,21 +71,25 @@
 }
 
 - (void)updateLightValue {
-    PHLightState *lightState = _huelight.lightState;
-    if (_brightness.brightness != lightState.brightness.longLongValue) {
-        _brightness.brightness = lightState.brightness.longLongValue;
-    }
-    
-    if (_hue.hue != lightState.hue.floatValue) {
-        _hue.hue = lightState.hue.floatValue;
-    }
-    
-    if (_state.on != lightState.on.boolValue) {
-        _state.on = lightState.on.boolValue;
-    }
-    
-    if (_saturation.saturation != lightState.saturation.floatValue) {
-        _saturation.saturation = lightState.saturation.floatValue;
+    if (!_pendingUpdate) {
+        PHLightState *lightState = _huelight.lightState;
+        if (_brightness.brightness != lightState.brightness.longLongValue) {
+            _brightness.brightness = lightState.brightness.longLongValue;
+        }
+        
+        if (_hue.hue != lightState.hue.floatValue) {
+            _hue.hue = lightState.hue.floatValue;
+        }
+        
+        if (_state.on != lightState.on.boolValue) {
+            _state.on = lightState.on.boolValue;
+        }
+        
+        if (_saturation.saturation != lightState.saturation.floatValue) {
+            _saturation.saturation = lightState.saturation.floatValue;
+        }
+    }else{
+        _pendingUpdate = NO;
     }
 }
 
@@ -135,6 +141,7 @@
                 dispatch_async(dispatch_get_global_queue(0, 0), ^{
                     if (![currentLightState.on isEqualToNumber:value]) {
                         NSLog(@"UpdateOn");
+                        _pendingUpdate = YES;
                         PHLightState *lightState = [[PHLightState alloc] init];
                         [lightState setOn:value];
                         [currentLightState setOn:value];
@@ -153,6 +160,7 @@
                 dispatch_async(dispatch_get_global_queue(0, 0), ^{
                     if (![currentLightState.hue isEqualToNumber:value]) {
                         NSLog(@"UpdateHue:%@",value);
+                        _pendingUpdate = YES;
                         PHLightState *lightState = [[PHLightState alloc] init];
                         
                         [lightState setHue:value];
@@ -172,8 +180,8 @@
                 dispatch_async(dispatch_get_global_queue(0, 0), ^{
                     if (![currentLightState.saturation isEqualToNumber:value]) {
                         NSLog(@"UpdateSaturation");
+                        _pendingUpdate = YES;
                         PHLightState *lightState = [[PHLightState alloc] init];
-                        
                         [lightState setSaturation:value];
                         [currentLightState setSaturation:value];
                         [[[[PHOverallFactory alloc] init] bridgeSendAPI] updateLightStateForId:_huelight.identifier withLighState:lightState completionHandler:^(NSArray *errors) {
@@ -191,8 +199,8 @@
                 dispatch_async(dispatch_get_global_queue(0, 0), ^{
                     if (![currentLightState.brightness isEqualToNumber:value]) {
                         NSLog(@"UpdateBrightness");
+                        _pendingUpdate = YES;
                         PHLightState *lightState = [[PHLightState alloc] init];
-                        
                         [lightState setBrightness:value];
                         [currentLightState setBrightness:value];
                         [[[[PHOverallFactory alloc] init] bridgeSendAPI] updateLightStateForId:_huelight.identifier withLighState:lightState completionHandler:^(NSArray *errors) {
