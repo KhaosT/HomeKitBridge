@@ -140,7 +140,7 @@
             if ([value isKindOfClass:[NSNumber class]]) {
                 dispatch_async(dispatch_get_global_queue(0, 0), ^{
                     if (![currentLightState.on isEqualToNumber:value]) {
-                        NSLog(@"UpdateOn");
+                        NSLog(@"UpdateOn:%@",value);
                         _pendingUpdate = YES;
                         PHLightState *lightState = [[PHLightState alloc] init];
                         [lightState setOn:value];
@@ -179,7 +179,7 @@
             if ([value isKindOfClass:[NSNumber class]]) {
                 dispatch_async(dispatch_get_global_queue(0, 0), ^{
                     if (![currentLightState.saturation isEqualToNumber:value]) {
-                        NSLog(@"UpdateSaturation");
+                        NSLog(@"UpdateSaturation:%@",value);
                         _pendingUpdate = YES;
                         PHLightState *lightState = [[PHLightState alloc] init];
                         [lightState setSaturation:value];
@@ -198,7 +198,7 @@
             if ([value isKindOfClass:[NSNumber class]]) {
                 dispatch_async(dispatch_get_global_queue(0, 0), ^{
                     if (![currentLightState.brightness isEqualToNumber:value]) {
-                        NSLog(@"UpdateBrightness");
+                        NSLog(@"UpdateBrightness:%@",value);
                         _pendingUpdate = YES;
                         PHLightState *lightState = [[PHLightState alloc] init];
                         [lightState setBrightness:value];
