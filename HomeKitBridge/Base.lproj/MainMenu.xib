@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6185.11" systemVersion="13E28" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6205" systemVersion="14A314h" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6185.11"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6205"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="NSApplication">
@@ -673,22 +673,14 @@
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="335" y="390" width="480" height="360"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1418"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1417"/>
             <view key="contentView" id="EiT-Mj-1SZ" customClass="OTIContainerView">
                 <rect key="frame" x="0.0" y="0.0" width="480" height="360"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <customView wantsLayer="YES" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="H6G-qo-Yqo">
-                        <rect key="frame" x="10" y="11" width="461" height="339"/>
+                        <rect key="frame" x="-147" y="-171" width="38" height="112"/>
                     </customView>
-                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="zO9-Ca-Wja">
-                        <rect key="frame" x="125" y="121" width="231" height="119"/>
-                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="0000" id="aWy-wV-dGO">
-                            <font key="font" size="100" name="HelveticaNeue-Thin"/>
-                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                        </textFieldCell>
-                    </textField>
                     <button translatesAutoresizingMaskIntoConstraints="NO" id="c5J-1s-MoH">
                         <rect key="frame" x="10" y="317" width="33" height="33"/>
                         <constraints>
@@ -704,9 +696,17 @@
                         </connections>
                     </button>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="tuK-lG-Xff">
-                        <rect key="frame" x="83" y="138" width="38" height="28"/>
+                        <rect key="frame" x="86" y="138" width="38" height="28"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" title="PIN" id="PrM-iH-8qY">
                             <font key="font" size="23" name="HelveticaNeue-Thin"/>
+                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="zO9-Ca-Wja">
+                        <rect key="frame" x="128" y="127" width="225" height="51"/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="000-00-000" placeholderString="" id="aWy-wV-dGO">
+                            <font key="font" size="42" name="HelveticaNeue-Thin"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
@@ -716,8 +716,8 @@
                     <constraint firstItem="zO9-Ca-Wja" firstAttribute="leading" secondItem="tuK-lG-Xff" secondAttribute="trailing" constant="8" id="4Js-cx-sp4"/>
                     <constraint firstItem="c5J-1s-MoH" firstAttribute="top" secondItem="EiT-Mj-1SZ" secondAttribute="top" constant="10" id="Jpn-ro-enm"/>
                     <constraint firstAttribute="centerX" secondItem="zO9-Ca-Wja" secondAttribute="centerX" id="Tfz-Wq-jjV"/>
-                    <constraint firstAttribute="centerY" secondItem="zO9-Ca-Wja" secondAttribute="centerY" id="URc-E6-uXr"/>
-                    <constraint firstItem="zO9-Ca-Wja" firstAttribute="baseline" secondItem="tuK-lG-Xff" secondAttribute="baseline" id="bAE-X5-VV0"/>
+                    <constraint firstAttribute="centerY" secondItem="zO9-Ca-Wja" secondAttribute="centerY" constant="-27.5" id="URc-E6-uXr"/>
+                    <constraint firstItem="zO9-Ca-Wja" firstAttribute="baseline" secondItem="tuK-lG-Xff" secondAttribute="baseline" constant="7" id="bAE-X5-VV0"/>
                     <constraint firstItem="c5J-1s-MoH" firstAttribute="leading" secondItem="EiT-Mj-1SZ" secondAttribute="leading" constant="10" id="hxo-HJ-HHI"/>
                 </constraints>
             </view>
