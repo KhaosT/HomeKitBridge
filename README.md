@@ -4,7 +4,7 @@ HomeKit Bridge is a project that allows app developers test their HomeKit app wi
 
 This project uses Apple's private framework "HAPAccessoryKit" which comes with Xcode 6. (It also serve as backbone of HomeKit Simulator)
 
-**You will need to put HomeKit Accessory Simulator.app under /Applications/ to build this project. (It comes with Hardware IO Tools which you can find from [here](https://developer.apple.com/downloads/index.action)**
+**You will need to put HomeKit Accessory Simulator.app under /Applications/ to build this project. (It comes with Hardware IO Tools which you can find from [here](https://developer.apple.com/downloads/index.action))**
 
 Currently the project only supports Philips Hue Light.
 
