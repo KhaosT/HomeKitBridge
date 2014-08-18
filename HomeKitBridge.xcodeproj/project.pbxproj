@@ -30,7 +30,7 @@
 		CC7CA84819792962001033F9 /* DispatchQueueLogFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = CC7CA84119792962001033F9 /* DispatchQueueLogFormatter.m */; };
 		CC7CA84A19792E3D001033F9 /* HueSDK_OSX.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = CC7CA8251979275D001033F9 /* HueSDK_OSX.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		CC7CA85019793B24001033F9 /* HueLight.m in Sources */ = {isa = PBXBuildFile; fileRef = CC7CA84F19793B24001033F9 /* HueLight.m */; };
-		CCA8438B19797B9C0005D2A6 /* HAPAccessoryKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CCA8438A19797B9C0005D2A6 /* HAPAccessoryKit.framework */; };
+		CCA59FE619A27A36003725CC /* HAPAccessoryKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CCA59FE519A27A36003725CC /* HAPAccessoryKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -224,6 +224,7 @@
 		CC7CA84119792962001033F9 /* DispatchQueueLogFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DispatchQueueLogFormatter.m; sourceTree = "<group>"; };
 		CC7CA84E19793B24001033F9 /* HueLight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HueLight.h; sourceTree = "<group>"; };
 		CC7CA84F19793B24001033F9 /* HueLight.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HueLight.m; sourceTree = "<group>"; };
+		CCA59FE519A27A36003725CC /* HAPAccessoryKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HAPAccessoryKit.framework; path = "/Applications/HomeKit Accessory Simulator.app/Contents/Frameworks/HAPAccessoryKit.framework"; sourceTree = "<absolute>"; };
 		CCA8438A19797B9C0005D2A6 /* HAPAccessoryKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HAPAccessoryKit.framework; path = Library/PrivateFrameworks/HAPAccessoryKit.framework; sourceTree = DEVELOPER_DIR; };
 /* End PBXFileReference section */
 
@@ -234,7 +235,7 @@
 			files = (
 				CC7CA82C197927A3001033F9 /* HueSDK_OSX.framework in Frameworks */,
 				CC7CA82D197927A3001033F9 /* SystemConfiguration.framework in Frameworks */,
-				CCA8438B19797B9C0005D2A6 /* HAPAccessoryKit.framework in Frameworks */,
+				CCA59FE619A27A36003725CC /* HAPAccessoryKit.framework in Frameworks */,
 				CC7CA82E197927A3001033F9 /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -454,6 +455,7 @@
 		CC7CA82B1979278D001033F9 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				CCA59FE519A27A36003725CC /* HAPAccessoryKit.framework */,
 				CC7CA8251979275D001033F9 /* HueSDK_OSX.framework */,
 				CC7CA82919792783001033F9 /* SystemConfiguration.framework */,
 				CC7CA8271979277E001033F9 /* Cocoa.framework */,
@@ -751,9 +753,12 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/HomeKitBridge",
 					"$(DEVELOPER_DIR)$(LOCAL_LIBRARY_DIR)/PrivateFrameworks",
+					"$(SYSTEM_APPS_DIR)/HomeKit",
+					Accessory,
+					Simulator.app/Contents/Frameworks,
 				);
 				INFOPLIST_FILE = HomeKitBridge/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks $(DEVELOPER_DIR)$(LOCAL_LIBRARY_DIR)/PrivateFrameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks \"/Applications/HomeKit Accessory Simulator.app/Contents/Frameworks\"";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx10.9;
@@ -770,9 +775,12 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/HomeKitBridge",
 					"$(DEVELOPER_DIR)$(LOCAL_LIBRARY_DIR)/PrivateFrameworks",
+					"$(SYSTEM_APPS_DIR)/HomeKit",
+					Accessory,
+					Simulator.app/Contents/Frameworks,
 				);
 				INFOPLIST_FILE = HomeKitBridge/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks $(DEVELOPER_DIR)$(LOCAL_LIBRARY_DIR)/PrivateFrameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks \"/Applications/HomeKit Accessory Simulator.app/Contents/Frameworks\"";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx10.9;
