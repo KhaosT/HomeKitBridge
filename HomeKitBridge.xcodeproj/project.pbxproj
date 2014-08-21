@@ -753,9 +753,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/HomeKitBridge",
 					"$(DEVELOPER_DIR)$(LOCAL_LIBRARY_DIR)/PrivateFrameworks",
-					"$(SYSTEM_APPS_DIR)/HomeKit",
-					Accessory,
-					Simulator.app/Contents/Frameworks,
+					"\"/Applications/HomeKit Accessory Simulator.app/Contents/Frameworks\"",
 				);
 				INFOPLIST_FILE = HomeKitBridge/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks \"/Applications/HomeKit Accessory Simulator.app/Contents/Frameworks\"";
@@ -775,9 +773,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/HomeKitBridge",
 					"$(DEVELOPER_DIR)$(LOCAL_LIBRARY_DIR)/PrivateFrameworks",
-					"$(SYSTEM_APPS_DIR)/HomeKit",
-					Accessory,
-					Simulator.app/Contents/Frameworks,
+					"\"/Applications/HomeKit Accessory Simulator.app/Contents/Frameworks\"",
 				);
 				INFOPLIST_FILE = HomeKitBridge/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks \"/Applications/HomeKit Accessory Simulator.app/Contents/Frameworks\"";
