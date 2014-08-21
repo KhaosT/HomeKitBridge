@@ -11,13 +11,13 @@
 {
     unsigned long long _logLevel;
     NSObject<OS_dispatch_queue> *_loggerQueue;
-    struct __aslclient *_aslClient;
+    struct __asl_object_s *_aslClient;
     NSMutableSet *_loggerFileHandles;
 }
 
 + (id)defaultLogger;
 @property(retain, nonatomic) NSMutableSet *loggerFileHandles; // @synthesize loggerFileHandles=_loggerFileHandles;
-@property(setter=setASLClient:) struct __aslclient *aslClient; // @synthesize aslClient=_aslClient;
+@property(setter=setASLClient:) struct __asl_object_s *aslClient; // @synthesize aslClient=_aslClient;
 @property(retain) NSObject<OS_dispatch_queue> *loggerQueue; // @synthesize loggerQueue=_loggerQueue;
 @property(nonatomic) unsigned long long logLevel; // @synthesize logLevel=_logLevel;
 - (void)logMessage:(id)arg1 level:(unsigned long long)arg2;

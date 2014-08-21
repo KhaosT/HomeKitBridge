@@ -4,17 +4,14 @@
 //     class-dump is Copyright (C) 1997-1998, 2000-2001, 2004-2013 by Steve Nygard.
 //
 
-#import "HAKVersioning.h"
+@class HAKService, HAKUUID, NSArray, NSHashTable, NSNumber, NSString;
 
-@class HAKService, HAKUUID, NSArray, NSHashTable, NSNumber,  NSString;
-
-@interface HAKCharacteristic : NSObject <HAKVersioning, NSCopying>
+@interface HAKCharacteristic : NSObject <NSCoding, NSCopying>
 {
     id _value;
     BOOL _readable;
     BOOL _writable;
     BOOL _updatable;
-    id <HAKCharacteristicDelegate> _delegate;
     HAKService *_service;
     HAKUUID *_UUID;
     NSNumber *_instanceID;
@@ -23,19 +20,14 @@
     unsigned long long _format;
     unsigned long long _unit;
     NSObject<OS_dispatch_queue> *_workQueue;
-    NSObject<OS_dispatch_queue> *_notificationQueue;
-    NSObject<OS_dispatch_queue> *_valueQueue;
     NSHashTable *_subscribedConnectionsTable;
 }
 
-+ (unsigned long long)archiveVersion;
 + (unsigned long long)properties;
 + (id)type;
 + (id)stringForUnit:(unsigned long long)arg1;
 + (id)stringForFormat:(unsigned long long)arg1;
 @property(retain, nonatomic) NSHashTable *subscribedConnectionsTable; // @synthesize subscribedConnectionsTable=_subscribedConnectionsTable;
-@property(retain, nonatomic) NSObject<OS_dispatch_queue> *valueQueue; // @synthesize valueQueue=_valueQueue;
-@property(retain, nonatomic) NSObject<OS_dispatch_queue> *notificationQueue; // @synthesize notificationQueue=_notificationQueue;
 @property(retain, nonatomic) NSObject<OS_dispatch_queue> *workQueue; // @synthesize workQueue=_workQueue;
 @property(nonatomic, getter=isUpdatable) BOOL updatable; // @synthesize updatable=_updatable;
 @property(nonatomic, getter=isWritable) BOOL writable; // @synthesize writable=_writable;
@@ -46,9 +38,8 @@
 @property(copy, nonatomic) NSString *manufacturerDescription; // @synthesize manufacturerDescription=_manufacturerDescription;
 @property(copy, nonatomic) NSNumber *instanceID; // @synthesize instanceID=_instanceID;
 @property(retain, nonatomic) HAKUUID *UUID; // @synthesize UUID=_UUID;
-@property(nonatomic) __weak HAKService *service; // @synthesize service=_service;
-@property(nonatomic) __weak id <HAKCharacteristicDelegate> delegate; // @synthesize delegate=_delegate;
-- (void)_handleNotifyingSubscribedConnectionsExceptConnection:(id)arg1;
+@property(nonatomic) HAKService *service; // @synthesize service=_service;
+- (void)_handleNotifyingSubscribedConnectionsValueUpdate:(id)arg1 exceptConnection:(id)arg2;
 - (void)_handleValueWrite:(id)arg1;
 - (void)handleValueUpdate:(id)arg1 connection:(id)arg2;
 - (BOOL)unsubscribeConnection:(id)arg1;
@@ -64,6 +55,8 @@
 - (id)responseJSONObjectWithMetadata:(BOOL)arg1 properties:(BOOL)arg2 type:(BOOL)arg3 events:(BOOL)arg4;
 - (id)propertiesJSONObject;
 - (id)JSONObject;
+- (id)transformJSONValue:(id)arg1;
+- (id)JSONValue;
 
 @end
 

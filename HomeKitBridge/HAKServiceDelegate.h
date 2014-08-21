@@ -10,7 +10,6 @@
 @protocol HAKServiceDelegate <NSObject>
 
 @optional
-- (void)service:(HAKService *)arg1 didUpdateCharacteristic:(HAKCharacteristic *)arg2 value:(id)arg3;
 - (void)service:(HAKService *)arg1 didRemoveCharacteristic:(HAKCharacteristic *)arg2;
 - (void)service:(HAKService *)arg1 didAddCharacteristic:(HAKCharacteristic *)arg2;
 @end

@@ -6,15 +6,11 @@
 
 #import "HAKNumberCharacteristic.h"
 
-#import "HAKVersioning.h"
-
-@interface HAKBoolCharacteristic : HAKNumberCharacteristic <NSCoding, HAKVersioning>
+@interface HAKBoolCharacteristic : HAKNumberCharacteristic
 {
 }
 
-+ (unsigned long long)archiveVersion;
 @property(nonatomic) BOOL boolValue;
-- (id)initWithCoder:(id)arg1;
 - (id)initWithType:(id)arg1 properties:(unsigned long long)arg2;
 
 @end

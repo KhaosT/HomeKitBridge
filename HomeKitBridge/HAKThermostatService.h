@@ -6,17 +6,14 @@
 
 #import "HAKService.h"
 
-#import "HAKVersioning.h"
-
 @class HAKCoolingThresholdTemperatureCharacteristic, HAKCurrentHeatingCoolingModeCharacteristic, HAKCurrentRelativeHumidityCharacteristic, HAKCurrentTemperatureCharacteristic, HAKHeatingThresholdTemperatureCharacteristic, HAKNameCharacteristic, HAKTargetHeatingCoolingModeCharacteristic, HAKTargetRelativeHumidityCharacteristic, HAKTargetTemperatureCharacteristic, HAKTemperatureUnitsCharacteristic;
 
-@interface HAKThermostatService : HAKService <HAKVersioning>
+@interface HAKThermostatService : HAKService
 {
     HAKHeatingThresholdTemperatureCharacteristic *_heatingThresholdTemperatureCharacteristic;
     HAKCoolingThresholdTemperatureCharacteristic *_coolingThresholdTemperatureCharacteristic;
 }
 
-+ (unsigned long long)archiveVersion;
 + (id)type;
 @property(retain, nonatomic) HAKCoolingThresholdTemperatureCharacteristic *coolingThresholdTemperatureCharacteristic; // @synthesize coolingThresholdTemperatureCharacteristic=_coolingThresholdTemperatureCharacteristic;
 @property(retain, nonatomic) HAKHeatingThresholdTemperatureCharacteristic *heatingThresholdTemperatureCharacteristic; // @synthesize heatingThresholdTemperatureCharacteristic=_heatingThresholdTemperatureCharacteristic;
@@ -30,7 +27,6 @@
 @property(readonly, nonatomic) HAKCurrentTemperatureCharacteristic *currentTemperatureCharacteristic;
 @property(readonly, nonatomic) HAKTargetHeatingCoolingModeCharacteristic *targetHeatingCoolingModeCharacteristic;
 @property(readonly, nonatomic) HAKCurrentHeatingCoolingModeCharacteristic *currentHeatingCoolingModeCharacteristic;
-- (id)initWithCoder:(id)arg1;
 - (id)init;
 
 @end

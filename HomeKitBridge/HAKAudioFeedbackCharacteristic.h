@@ -6,14 +6,13 @@
 
 #import "HAKBoolCharacteristic.h"
 
-@interface HAKLockedCharacteristic : HAKBoolCharacteristic
+@interface HAKAudioFeedbackCharacteristic : HAKBoolCharacteristic
 {
 }
 
 + (unsigned long long)properties;
 + (id)type;
-@property(nonatomic, getter=isLocked) BOOL locked;
-- (id)init;
+@property(nonatomic, getter=isAudioFeedbackEnabled) BOOL audioFeedbackEnabled;
 
 @end
 

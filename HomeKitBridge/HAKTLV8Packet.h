@@ -18,6 +18,7 @@
 @property(readonly) unsigned char length;
 - (id)description;
 - (id)initWithType:(unsigned char)arg1 value:(id)arg2;
+- (id)initWithData:(id)arg1;
 
 @end
 

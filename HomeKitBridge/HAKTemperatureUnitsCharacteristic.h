@@ -6,17 +6,13 @@
 
 #import "HAKUnsignedCharCharacteristic.h"
 
-#import "HAKVersioning.h"
-
-@interface HAKTemperatureUnitsCharacteristic : HAKUnsignedCharCharacteristic <HAKVersioning>
+@interface HAKTemperatureUnitsCharacteristic : HAKUnsignedCharCharacteristic
 {
 }
 
-+ (unsigned long long)archiveVersion;
 + (unsigned long long)properties;
 + (id)type;
 @property(nonatomic) unsigned char temperatureUnits;
-- (id)initWithCoder:(id)arg1;
 - (id)init;
 
 @end

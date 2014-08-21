@@ -4,16 +4,15 @@
 //     class-dump is Copyright (C) 1997-1998, 2000-2001, 2004-2013 by Steve Nygard.
 //
 
-#import "HAKFloatCharacteristic.h"
+#import "HAKUnsignedIntCharacteristic.h"
 
-@interface HAKTargetRelativeHumidityCharacteristic : HAKFloatCharacteristic
+@interface HAKLockManagementAutoSecureTimeoutCharacteristic : HAKUnsignedIntCharacteristic
 {
 }
 
 + (unsigned long long)properties;
 + (id)type;
-@property(nonatomic) float targetRelativeHumidity;
-- (id)init;
+@property(nonatomic) unsigned int autoSecureTimeout;
 
 @end
 

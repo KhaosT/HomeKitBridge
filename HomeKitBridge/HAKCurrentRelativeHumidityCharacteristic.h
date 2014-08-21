@@ -6,17 +6,13 @@
 
 #import "HAKFloatCharacteristic.h"
 
-#import "HAKVersioning.h"
-
-@interface HAKCurrentRelativeHumidityCharacteristic : HAKFloatCharacteristic <HAKVersioning>
+@interface HAKCurrentRelativeHumidityCharacteristic : HAKFloatCharacteristic
 {
 }
 
-+ (unsigned long long)archiveVersion;
 + (unsigned long long)properties;
 + (id)type;
 @property(nonatomic) float currentRelativeHumidity;
-- (id)initWithCoder:(id)arg1;
 - (id)init;
 
 @end

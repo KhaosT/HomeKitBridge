@@ -8,34 +8,36 @@
 #import "HAKAccessoryDelegate.h"
 #import "HAKPairingSessionDelegate.h"
 
-@class HAKInstanceIDPool, HAKTransportManager, NSMutableOrderedSet,  NSOrderedSet, NSString;
+@class HAKInstanceIDPool, HAKTransportManager, NSArray, NSMutableArray, NSString;
 
 @interface HAKTransport : NSObject <NSCopying, NSCoding, HAKPairingSessionDelegate, HAKAccessoryDelegate>
 {
-    NSMutableOrderedSet *_accessories;
+    NSMutableArray *_accessories;
     BOOL _started;
-    NSString *_name;
-    NSString *_username;
     NSString *_password;
+    NSString *_name;
+    NSString *_identifier;
     HAKTransportManager *_transportManager;
     HAKInstanceIDPool *_instanceIDPool;
-    NSObject<OS_dispatch_queue> *_notificationQueue;
+    NSObject<OS_dispatch_queue> *_workQueue;
 }
 
-@property(retain, nonatomic) NSObject<OS_dispatch_queue> *notificationQueue; // @synthesize notificationQueue=_notificationQueue;
++ (id)restrictedPasswordSet;
+@property(retain, nonatomic) NSObject<OS_dispatch_queue> *workQueue; // @synthesize workQueue=_workQueue;
 @property(retain, nonatomic) HAKInstanceIDPool *instanceIDPool; // @synthesize instanceIDPool=_instanceIDPool;
 @property(nonatomic) __weak HAKTransportManager *transportManager; // @synthesize transportManager=_transportManager;
-@property(nonatomic, getter=isStarted) BOOL started; // @synthesize started=_started;
-@property(copy, nonatomic) NSString *password; // @synthesize password=_password;
-@property(copy, nonatomic) NSString *username; // @synthesize username=_username;
-@property(copy, nonatomic) NSString *name; // @synthesize name=_name;
-@property(retain, nonatomic) NSOrderedSet *accessories; // @synthesize accessories=_accessories;
+@property(retain, nonatomic) NSArray *accessories; // @synthesize accessories=_accessories;
 - (id)accessoryWithInstanceID:(unsigned long long)arg1;
 - (void)removeAccessory:(id)arg1;
 - (void)addAccessory:(id)arg1;
+@property(nonatomic, getter=isStarted) BOOL started; // @synthesize started=_started;
+@property(copy, nonatomic) NSString *identifier; // @synthesize identifier=_identifier;
+@property(copy, nonatomic) NSString *name; // @synthesize name=_name;
 - (BOOL)updateValue:(id)arg1 forCharacteristic:(id)arg2 onSubscribedConnections:(id)arg3;
 - (void)stop;
 - (void)start;
+- (void)_setPassword:(id)arg1;
+@property(copy, nonatomic) NSString *password; // @synthesize password=_password;
 - (void)accessory:(id)arg1 didUpdateValue:(id)arg2 forCharacteristic:(id)arg3;
 - (void)accessory:(id)arg1 didUpdateService:(id)arg2;
 - (void)accessory:(id)arg1 didRemoveService:(id)arg2;
@@ -44,6 +46,12 @@
 - (id)initWithCoder:(id)arg1;
 - (id)copyWithZone:(struct _NSZone *)arg1;
 - (id)init;
+
+// Remaining properties
+@property(readonly, copy) NSString *debugDescription;
+@property(readonly, copy) NSString *description;
+@property(readonly) unsigned long long hash;
+@property(readonly) Class superclass;
 
 @end
 

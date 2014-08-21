@@ -4,13 +4,15 @@
 //     class-dump is Copyright (C) 1997-1998, 2000-2001, 2004-2013 by Steve Nygard.
 //
 
-#import "HAKNumberCharacteristic.h"
+#import "HAKCharacteristic.h"
 
-@interface HAKIntegerCharacteristic : HAKNumberCharacteristic
+@class HAKTLV8Container;
+
+@interface HAKTLV8Characteristic : HAKCharacteristic
 {
 }
 
-@property(nonatomic) long long integerValue;
+@property(copy, nonatomic) HAKTLV8Container *TLV8Container;
 - (id)initWithType:(id)arg1 properties:(unsigned long long)arg2;
 
 @end

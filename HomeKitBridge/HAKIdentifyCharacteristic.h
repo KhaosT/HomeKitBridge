@@ -6,17 +6,16 @@
 
 #import "HAKBoolCharacteristic.h"
 
+
 @class NSTimer;
 
-@interface HAKIdentifyCharacteristic : HAKBoolCharacteristic
+@interface HAKIdentifyCharacteristic : HAKBoolCharacteristic <NSCoding>
 {
     NSTimer *_resetTimer;
 }
 
 + (unsigned long long)properties;
 + (id)type;
-+ (void)performBlockOnTimerThread:(id)arg1;
-+ (void)executeBlockOnTimerThread:(id)arg1;
 + (void)timerThreadMain;
 + (void)createTimerThreadIfNeeded;
 @property(retain) NSTimer *resetTimer; // @synthesize resetTimer=_resetTimer;

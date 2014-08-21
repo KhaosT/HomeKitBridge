@@ -9,10 +9,11 @@
 #import "HAKHTTPConnectionDelegate.h"
 #import "HAKSocketDelegate.h"
 
-@class HAKNetService, HAKSocket, NSMutableArray, NSNumber, NSThread;
+@class HAKNetService, HAKSocket, NSMutableArray, NSNumber, NSString, NSThread;
 
 @interface HAKIPTransport : HAKTransport <NSCoding, NSNetServiceDelegate, HAKHTTPConnectionDelegate, HAKSocketDelegate>
 {
+    BOOL _dirty;
     BOOL _serverThreadShouldRun;
     HAKSocket *_socket;
     HAKNetService *_netService;
@@ -23,6 +24,7 @@
 }
 
 @property BOOL serverThreadShouldRun; // @synthesize serverThreadShouldRun=_serverThreadShouldRun;
+@property(getter=isDirty) BOOL dirty; // @synthesize dirty=_dirty;
 @property(retain, nonatomic) NSNumber *stateNumber; // @synthesize stateNumber=_stateNumber;
 @property(retain, nonatomic) NSNumber *configurationNumber; // @synthesize configurationNumber=_configurationNumber;
 @property(retain, nonatomic) NSThread *serverThread; // @synthesize serverThread=_serverThread;
@@ -31,13 +33,15 @@
 @property(retain, nonatomic) HAKSocket *socket; // @synthesize socket=_socket;
 - (void)serverThreadMain;
 - (void)removeSources;
+- (void)_removePairingWithConnection:(id)arg1 identifer:(id)arg2;
+- (void)_addPairingWithConnection:(id)arg1 identifer:(id)arg2 publicKey:(id)arg3;
+- (void)_handlePairingRequestWithConnection:(id)arg1 TLV8:(id)arg2;
 - (id)_characteristicWriteWithConnection:(id)arg1 attributes:(id)arg2 error:(char *)arg3;
 - (void)_handleCharacteristicWriteWithConnection:(id)arg1 body:(id)arg2;
 - (id)_characteristicReadWithAccessoryID:(unsigned long long)arg1 characteristicID:(unsigned long long)arg2 metadata:(BOOL)arg3 properties:(BOOL)arg4 type:(BOOL)arg5 events:(BOOL)arg6 error:(char *)arg7;
 - (void)_handleCharacteristicReadRequestWithConnection:(id)arg1 query:(id)arg2;
 - (void)_handleAllAccessoriesRequestWithConnection:(id)arg1;
 - (void)_postRequestWithConnection:(id)arg1 URL:(id)arg2 contentType:(id)arg3 body:(id)arg4;
-- (void)_deleteRequestWithConnection:(id)arg1 URL:(id)arg2 contentType:(id)arg3 body:(id)arg4;
 - (void)_putRequestWithConnection:(id)arg1 URL:(id)arg2 contentType:(id)arg3 body:(id)arg4;
 - (void)_getRequestWithConnection:(id)arg1 URL:(id)arg2;
 - (void)identify;
@@ -48,7 +52,7 @@
 - (BOOL)updateValue:(id)arg1 forCharacteristic:(id)arg2 onSubscribedConnections:(id)arg3;
 - (void)stop;
 - (void)start;
-- (void)setUsername:(id)arg1;
+- (void)setIdentifier:(id)arg1;
 - (void)netServiceDidStop:(id)arg1;
 - (void)netService:(id)arg1 didNotPublish:(id)arg2;
 - (void)netServiceDidPublish:(id)arg1;
@@ -63,6 +67,12 @@
 - (id)initWithCoder:(id)arg1;
 - (void)dealloc;
 - (id)init;
+
+// Remaining properties
+@property(readonly, copy) NSString *debugDescription;
+@property(readonly, copy) NSString *description;
+@property(readonly) unsigned long long hash;
+@property(readonly) Class superclass;
 
 @end
 

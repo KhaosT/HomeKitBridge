@@ -6,15 +6,13 @@
 
 #import "HAKCharacteristic.h"
 
-
 @class NSArray;
 
-@interface HAKArrayCharacteristic : HAKCharacteristic <NSCoding>
+@interface HAKArrayCharacteristic : HAKCharacteristic
 {
 }
 
 @property(copy, nonatomic) NSArray *arrayValue;
-- (id)initWithCoder:(id)arg1;
 - (id)initWithType:(id)arg1 properties:(unsigned long long)arg2;
 
 @end

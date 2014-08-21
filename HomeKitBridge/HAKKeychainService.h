@@ -5,23 +5,35 @@
 //
 
 
-@class NSMutableDictionary;
+@class NSString;
 
 @interface HAKKeychainService : NSObject
 {
-    NSMutableDictionary *_rootObject;
-    NSObject<OS_dispatch_queue> *_queue;
+    struct OpaqueSecKeychainRef *_keychain;
+    BOOL _authenticationDisabled;
+    NSObject<OS_dispatch_queue> *_workQueue;
 }
 
-+ (id)keychainFileURL;
++ (id)keychainURL;
 + (id)defaultKeychainService;
-@property(retain) NSObject<OS_dispatch_queue> *queue; // @synthesize queue=_queue;
-- (void)addAccessory:(id)arg1;
-- (id)accessoryWithUsername:(id)arg1;
-- (id)allAccessories;
-- (void)setRootObject:(id)arg1;
-- (id)rootObject;
-- (void)removeAllAccessories;
+@property(nonatomic, getter=isAuthenticationDisabled) BOOL authenticationDisabled; // @synthesize authenticationDisabled=_authenticationDisabled;
+@property(retain) NSObject<OS_dispatch_queue> *workQueue; // @synthesize workQueue=_workQueue;
+- (int)_unlockWithPassword:(id)arg1;
+- (BOOL)unlock;
+- (int)_isUnlocked:(char *)arg1;
+- (BOOL)isUnlocked;
+- (BOOL)_createKeychain;
+@property(readonly) struct OpaqueSecKeychainRef *keychain;
+- (BOOL)_keychainExists;
+@property(retain, nonatomic) NSString *password;
+- (int)_getPassword:(id *)arg1;
+- (int)_key:(id *)arg1 keyClass:(unsigned long long)arg2 account:(id)arg3 service:(id)arg4;
+- (id)keyWithKeyClass:(unsigned long long)arg1 account:(id)arg2 service:(id)arg3;
+- (int)_removeKey:(id)arg1;
+- (BOOL)removeKey:(id)arg1 error:(id *)arg2;
+- (int)_addKey:(id)arg1;
+- (BOOL)addKey:(id)arg1 error:(id *)arg2;
+- (void)dealloc;
 - (id)init;
 
 @end

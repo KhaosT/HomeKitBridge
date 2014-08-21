@@ -8,6 +8,8 @@
 
 #import "NSKeyedUnarchiverDelegate.h"
 
+@class NSString;
+
 @interface HAKVersionedUnarchiver : NSKeyedUnarchiver <NSKeyedUnarchiverDelegate>
 {
     id <NSKeyedUnarchiverDelegate> _relayDelegate;
@@ -18,6 +20,12 @@
 - (void)_setClassVersions;
 - (void)_registerForwardingClasses;
 - (id)initForReadingWithData:(id)arg1;
+
+// Remaining properties
+@property(readonly, copy) NSString *debugDescription;
+@property(readonly, copy) NSString *description;
+@property(readonly) unsigned long long hash;
+@property(readonly) Class superclass;
 
 @end
 

@@ -5,35 +5,38 @@
 //
 
 
-#import "HAKCharacteristicDelegate.h"
-#import "HAKVersioning.h"
 
-@class HAKAccessory, HAKUUID, NSMutableOrderedSet, NSNumber, NSOrderedSet;
+@class HAKAccessory, HAKUUID, NSArray, NSHashTable, NSMutableArray, NSNumber;
 
-@interface HAKService : NSObject <HAKCharacteristicDelegate, HAKVersioning, NSCopying>
+@interface HAKService : NSObject <NSCoding, NSCopying>
 {
-    NSMutableOrderedSet *_characteristics;
+    NSMutableArray *_characteristics;
+    NSHashTable *_includedServices;
+    BOOL _primary;
     id <HAKServiceDelegate> _delegate;
     HAKAccessory *_accessory;
     HAKUUID *_UUID;
     NSNumber *_instanceID;
-    NSObject<OS_dispatch_queue> *_notificationQueue;
+    NSObject<OS_dispatch_queue> *_workQueue;
 }
 
-+ (unsigned long long)archiveVersion;
 + (id)type;
-@property(retain, nonatomic) NSObject<OS_dispatch_queue> *notificationQueue; // @synthesize notificationQueue=_notificationQueue;
+@property(retain, nonatomic) NSObject<OS_dispatch_queue> *workQueue; // @synthesize workQueue=_workQueue;
+@property(nonatomic, getter=isPrimary) BOOL primary; // @synthesize primary=_primary;
 @property(copy, nonatomic) NSNumber *instanceID; // @synthesize instanceID=_instanceID;
 @property(retain, nonatomic) HAKUUID *UUID; // @synthesize UUID=_UUID;
 @property(nonatomic) __weak HAKAccessory *accessory; // @synthesize accessory=_accessory;
 @property(nonatomic) __weak id <HAKServiceDelegate> delegate; // @synthesize delegate=_delegate;
-@property(retain, nonatomic) NSOrderedSet *characteristics; // @synthesize characteristics=_characteristics;
+@property(retain, nonatomic) NSArray *characteristics; // @synthesize characteristics=_characteristics;
+- (void)removeIncludedService:(id)arg1;
+- (void)addIncludedService:(id)arg1;
+@property(readonly, nonatomic) NSArray *includedServices;
 - (id)characteristicWithType:(id)arg1;
 - (id)characteristicWithInstanceId:(unsigned long long)arg1;
 - (void)removeAllCharacteristicsWithType:(id)arg1;
 - (void)removeCharacteristic:(id)arg1;
 - (void)addCharacteristic:(id)arg1;
-- (void)characteristic:(id)arg1 didUpdateValue:(id)arg2;
+- (id)description;
 - (void)encodeWithCoder:(id)arg1;
 - (id)initWithCoder:(id)arg1;
 - (id)copyWithZone:(struct _NSZone *)arg1;

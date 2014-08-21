@@ -7,30 +7,27 @@
 
 #import "HAKServiceDelegate.h"
 #import "HAKAccessoryDelegate.h"
-#import "HAKVersioning.h"
 #import "HAKAccessoryInformationService.h"
 
-@class HAKInstanceIDPool;
+@class HAKAccessoryInformationService, HAKInstanceIDPool, NSArray, NSHashTable, NSMutableArray, NSNumber, NSString;
 
-@interface HAKAccessory : NSObject <NSCopying, HAKServiceDelegate, HAKVersioning>
+@interface HAKAccessory : NSObject <NSCopying, NSCoding, HAKServiceDelegate>
 {
-    NSMutableOrderedSet *_services;
-    id <HAKAccessoryDelegate> _delegate;
+    NSMutableArray *_services;
     NSNumber *_instanceID;
     HAKInstanceIDPool *_instanceIDPool;
     NSHashTable *_transportRefs;
     HAKAccessoryInformationService *_accessoryInformationService;
-    NSObject<OS_dispatch_queue> *_notificationQueue;
+    NSObject<OS_dispatch_queue> *_workQueue;
 }
 
-+ (unsigned long long)archiveVersion;
-@property(retain, nonatomic) NSObject<OS_dispatch_queue> *notificationQueue; // @synthesize notificationQueue=_notificationQueue;
-@property(nonatomic,weak) HAKAccessoryInformationService *accessoryInformationService; // @synthesize accessoryInformationService=_accessoryInformationService;
+@property(retain, nonatomic) NSObject<OS_dispatch_queue> *workQueue; // @synthesize workQueue=_workQueue;
+@property(nonatomic) __weak HAKAccessoryInformationService *accessoryInformationService; // @synthesize accessoryInformationService=_accessoryInformationService;
 @property(retain, nonatomic) NSHashTable *transportRefs; // @synthesize transportRefs=_transportRefs;
 @property(retain, nonatomic) HAKInstanceIDPool *instanceIDPool; // @synthesize instanceIDPool=_instanceIDPool;
 @property(retain, nonatomic) NSNumber *instanceID; // @synthesize instanceID=_instanceID;
-@property(nonatomic,weak) id <HAKAccessoryDelegate> delegate; // @synthesize delegate=_delegate;
-@property(retain, nonatomic) NSOrderedSet *services; // @synthesize services=_services;
+@property(nonatomic) __weak id <HAKAccessoryDelegate> delegate; // @synthesize delegate=_delegate;
+@property(retain, nonatomic) NSArray *services; // @synthesize services=_services;
 - (id)serialNumber;
 - (id)manufacturer;
 - (id)model;
@@ -41,9 +38,8 @@
 - (void)addService:(id)arg1;
 - (void)removeTransport:(id)arg1;
 - (void)addTransport:(id)arg1;
-@property(readonly, retain, nonatomic) NSSet *transports;
+@property(readonly, retain, nonatomic) NSArray *transports;
 - (void)_handleUpdatedService:(id)arg1;
-- (void)service:(id)arg1 didUpdateCharacteristic:(id)arg2 value:(id)arg3;
 - (void)service:(id)arg1 didRemoveCharacteristic:(id)arg2;
 - (void)service:(id)arg1 didAddCharacteristic:(id)arg2;
 - (void)encodeWithCoder:(id)arg1;
@@ -52,6 +48,12 @@
 - (id)init;
 - (id)characteristicWithInstanceId:(unsigned long long)arg1;
 - (id)JSONObject;
+
+// Remaining properties
+@property(readonly, copy) NSString *debugDescription;
+@property(readonly, copy) NSString *description;
+@property(readonly) unsigned long long hash;
+@property(readonly) Class superclass;
 
 @end
 

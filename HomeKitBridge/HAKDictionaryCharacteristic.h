@@ -6,13 +6,13 @@
 
 #import "HAKCharacteristic.h"
 
+@class NSDictionary;
 
-@interface HAKObjectCharacteristic : HAKCharacteristic <NSCoding>
+@interface HAKDictionaryCharacteristic : HAKCharacteristic
 {
 }
 
-@property(retain, nonatomic) id object;
-- (id)initWithCoder:(id)arg1;
+@property(retain, nonatomic) NSDictionary *dictionaryValue;
 - (id)initWithType:(id)arg1 properties:(unsigned long long)arg2;
 
 @end

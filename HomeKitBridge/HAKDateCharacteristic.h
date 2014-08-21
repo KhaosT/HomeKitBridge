@@ -6,15 +6,13 @@
 
 #import "HAKCharacteristic.h"
 
-
 @class NSDate;
 
-@interface HAKDateCharacteristic : HAKCharacteristic <NSCoding>
+@interface HAKDateCharacteristic : HAKCharacteristic
 {
 }
 
 @property(copy, nonatomic) NSDate *dateValue;
-- (id)initWithCoder:(id)arg1;
 - (id)initWithType:(id)arg1 properties:(unsigned long long)arg2;
 
 @end

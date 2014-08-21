@@ -6,18 +6,11 @@
 
 #import "HAKNumberCharacteristic.h"
 
-@class NSNumber;
-
-@interface HAKFloatCharacteristic : HAKNumberCharacteristic <NSCopying, NSCoding>
+@interface HAKFloatCharacteristic : HAKNumberCharacteristic
 {
-    NSNumber *_precision;
 }
 
-@property(retain, nonatomic) NSNumber *precision; // @synthesize precision=_precision;
 @property(nonatomic) float floatValue;
-- (void)encodeWithCoder:(id)arg1;
-- (id)initWithCoder:(id)arg1;
-- (id)copyWithZone:(struct _NSZone *)arg1;
 - (id)initWithType:(id)arg1 properties:(unsigned long long)arg2;
 
 @end

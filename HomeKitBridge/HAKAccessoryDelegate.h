@@ -5,12 +5,11 @@
 //
 
 
-@class HAKAccessory, HAKCharacteristic, HAKService;
+@class HAKAccessory, HAKService;
 
 @protocol HAKAccessoryDelegate <NSObject>
 
 @optional
-- (void)accessory:(HAKAccessory *)arg1 didUpdateValue:(id)arg2 forCharacteristic:(HAKCharacteristic *)arg3;
 - (void)accessory:(HAKAccessory *)arg1 didUpdateService:(HAKService *)arg2;
 - (void)accessory:(HAKAccessory *)arg1 didRemoveService:(HAKService *)arg2;
 - (void)accessory:(HAKAccessory *)arg1 didAddService:(HAKService *)arg2;

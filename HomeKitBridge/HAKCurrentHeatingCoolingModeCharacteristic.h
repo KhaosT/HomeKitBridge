@@ -6,18 +6,13 @@
 
 #import "HAKUnsignedCharCharacteristic.h"
 
-#import "HAKVersioning.h"
-
-@interface HAKCurrentHeatingCoolingModeCharacteristic : HAKUnsignedCharCharacteristic <HAKVersioning>
+@interface HAKCurrentHeatingCoolingModeCharacteristic : HAKUnsignedCharCharacteristic
 {
 }
 
-+ (id)forwardingClassNames;
-+ (unsigned long long)archiveVersion;
 + (unsigned long long)properties;
 + (id)type;
 @property(nonatomic) unsigned char currentHeatingCoolingMode;
-- (id)initWithCoder:(id)arg1;
 - (id)init;
 
 @end

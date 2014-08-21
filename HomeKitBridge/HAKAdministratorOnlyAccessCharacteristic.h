@@ -6,14 +6,13 @@
 
 #import "HAKBoolCharacteristic.h"
 
-@interface HAKOnCharacteristic : HAKBoolCharacteristic
+@interface HAKAdministratorOnlyAccessCharacteristic : HAKBoolCharacteristic
 {
 }
 
 + (unsigned long long)properties;
 + (id)type;
-@property(nonatomic, getter=isOn) BOOL on;
-- (id)init;
+@property(nonatomic, getter=isAdministratorOnlyAccessEnabled) BOOL administratorOnlyAccessEnabled;
 
 @end
 

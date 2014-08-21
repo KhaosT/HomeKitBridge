@@ -6,17 +6,13 @@
 
 #import "HAKUnsignedCharCharacteristic.h"
 
-#import "HAKVersioning.h"
-
-@interface HAKTargetDoorStateCharacteristic : HAKUnsignedCharCharacteristic <HAKVersioning>
+@interface HAKTargetDoorStateCharacteristic : HAKUnsignedCharCharacteristic
 {
 }
 
-+ (unsigned long long)archiveVersion;
 + (unsigned long long)properties;
 + (id)type;
 @property(nonatomic) unsigned char targetDoorState;
-- (id)initWithCoder:(id)arg1;
 - (id)init;
 
 @end

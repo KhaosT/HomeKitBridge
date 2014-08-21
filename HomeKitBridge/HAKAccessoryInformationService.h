@@ -6,22 +6,18 @@
 
 #import "HAKService.h"
 
-#import "HAKVersioning.h"
-
 @class HAKIdentifyCharacteristic, HAKManufacturerCharacteristic, HAKModelCharacteristic, HAKNameCharacteristic, HAKSerialNumberCharacteristic;
 
-@interface HAKAccessoryInformationService : HAKService <HAKVersioning>
+@interface HAKAccessoryInformationService : HAKService
 {
 }
 
-+ (unsigned long long)archiveVersion;
 + (id)type;
 @property(readonly, nonatomic) HAKIdentifyCharacteristic *identifyCharacteristic;
 @property(readonly, nonatomic) HAKSerialNumberCharacteristic *serialNumberCharacteristic;
 @property(readonly, nonatomic) HAKModelCharacteristic *modelCharacteristic;
 @property(readonly, nonatomic) HAKManufacturerCharacteristic *manufacturerCharacteristic;
 @property(readonly, nonatomic) HAKNameCharacteristic *nameCharacteristic;
-- (id)initWithCoder:(id)arg1;
 - (id)init;
 
 @end

@@ -6,17 +6,13 @@
 
 #import "HAKFloatCharacteristic.h"
 
-#import "HAKVersioning.h"
-
-@interface HAKHeatingThresholdTemperatureCharacteristic : HAKFloatCharacteristic <HAKVersioning>
+@interface HAKHeatingThresholdTemperatureCharacteristic : HAKFloatCharacteristic
 {
 }
 
-+ (unsigned long long)archiveVersion;
 + (unsigned long long)properties;
 + (id)type;
 @property(nonatomic) float heatingThresholdTemperature;
-- (id)initWithCoder:(id)arg1;
 - (id)init;
 
 @end

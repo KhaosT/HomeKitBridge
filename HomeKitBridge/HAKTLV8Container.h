@@ -13,14 +13,16 @@
 }
 
 - (id)numberForType:(unsigned char)arg1;
-- (void)setNumber:(id)arg1 forType:(unsigned char)arg2;
+- (void)setUnsignedLongLong:(unsigned long long)arg1 forType:(unsigned char)arg2;
+- (void)setUnsignedInt:(unsigned int)arg1 forType:(unsigned char)arg2;
+- (void)setUnsignedShort:(unsigned short)arg1 forType:(unsigned char)arg2;
+- (void)setUnsignedChar:(unsigned char)arg1 forType:(unsigned char)arg2;
 - (unsigned long long)sizeOfNumber:(id)arg1;
 - (id)stringForType:(unsigned char)arg1;
 - (void)setString:(id)arg1 forType:(unsigned char)arg2;
 - (id)dataForType:(unsigned char)arg1;
 - (void)setData:(id)arg1 forType:(unsigned char)arg2;
 - (id)serialize;
-- (void)addPacketsWithData:(id)arg1;
 - (void)removePacketsWithType:(unsigned char)arg1;
 - (id)description;
 - (id)initWithData:(id)arg1;

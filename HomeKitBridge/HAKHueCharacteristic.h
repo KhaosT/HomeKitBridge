@@ -6,17 +6,13 @@
 
 #import "HAKFloatCharacteristic.h"
 
-#import "HAKVersioning.h"
-
-@interface HAKHueCharacteristic : HAKFloatCharacteristic <HAKVersioning>
+@interface HAKHueCharacteristic : HAKFloatCharacteristic
 {
 }
 
-+ (unsigned long long)archiveVersion;
 + (unsigned long long)properties;
 + (id)type;
 @property(nonatomic) float hue;
-- (id)initWithCoder:(id)arg1;
 - (id)init;
 
 @end

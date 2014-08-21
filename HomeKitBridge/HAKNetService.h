@@ -6,7 +6,7 @@
 
 #import "NSNetService.h"
 
-@class  NSString;
+@class NSString;
 
 @interface HAKNetService : NSNetService
 {

@@ -6,7 +6,7 @@
 
 #import "HAKService.h"
 
-@class HAKCurrentDoorStateCharacteristic, HAKLockedCharacteristic, HAKNameCharacteristic, HAKObstructionDetectedCharacteristic, HAKTargetDoorStateCharacteristic;
+@class HAKCurrentDoorStateCharacteristic, HAKLockMechanismCurrentStateCharacteristic, HAKLockMechanismTargetStateCharacteristic, HAKNameCharacteristic, HAKObstructionDetectedCharacteristic, HAKTargetDoorStateCharacteristic;
 
 @interface HAKGarageDoorOpenerService : HAKService
 {
@@ -14,7 +14,8 @@
 
 + (id)type;
 @property(retain, nonatomic) HAKNameCharacteristic *nameCharacteristic;
-@property(retain, nonatomic) HAKLockedCharacteristic *lockedCharacteristic;
+@property(retain, nonatomic) HAKLockMechanismTargetStateCharacteristic *lockMechanismTargetStateCharacteristic;
+@property(retain, nonatomic) HAKLockMechanismCurrentStateCharacteristic *lockMechanismCurrentStateCharacteristic;
 @property(readonly, nonatomic) HAKObstructionDetectedCharacteristic *obstructionDetectedCharacteristic;
 @property(readonly, nonatomic) HAKTargetDoorStateCharacteristic *targetDoorStateCharacteristic;
 @property(readonly, nonatomic) HAKCurrentDoorStateCharacteristic *currentDoorStateCharacteristic;

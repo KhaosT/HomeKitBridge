@@ -4,16 +4,17 @@
 //     class-dump is Copyright (C) 1997-1998, 2000-2001, 2004-2013 by Steve Nygard.
 //
 
-#import "HAKFloatCharacteristic.h"
+#import "HAKTLV8Characteristic.h"
 
-@interface HAKTargetRelativeHumidityCharacteristic : HAKFloatCharacteristic
+@class HAKTLV8Container;
+
+@interface HAKLogsCharacteristic : HAKTLV8Characteristic
 {
 }
 
 + (unsigned long long)properties;
 + (id)type;
-@property(nonatomic) float targetRelativeHumidity;
-- (id)init;
+@property(copy, nonatomic) HAKTLV8Container *logs;
 
 @end
 
