@@ -63,6 +63,7 @@
 
 - (void)authenticationSuccess {
     NSLog(@"Authentication Success!");
+    [self setupLights];
     [self performSelector:@selector(enableLocalHeartbeat) withObject:nil afterDelay:1];
 }
 
@@ -73,15 +74,19 @@
 - (void)updateLights {
     if (!_hasSetup) {
         _hasSetup = YES;
-        for (PHLight *light in [PHBridgeResourcesReader readBridgeResourcesCache].lights.allValues) {
-            HueLight *huelight = [[HueLight alloc]initWithHAPCore:_accessoryCore HueLight:light];
-            [_lights setObject:huelight forKey:light.name];
-        }
+        [self setupLights];
     }else{
         for (PHLight *light in [PHBridgeResourcesReader readBridgeResourcesCache].lights.allValues) {
             HueLight *huelight = _lights[light.name];
             [huelight updateLightValueWithLight:light];
         }
+    }
+}
+
+- (void)setupLights {
+    for (PHLight *light in [PHBridgeResourcesReader readBridgeResourcesCache].lights.allValues) {
+        HueLight *huelight = [[HueLight alloc]initWithHAPCore:_accessoryCore HueLight:light];
+        [_lights setObject:huelight forKey:light.name];
     }
 }
 
