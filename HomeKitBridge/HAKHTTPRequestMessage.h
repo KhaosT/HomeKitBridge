@@ -6,19 +6,21 @@
 
 #import "HAKHTTPMessage.h"
 
-@class NSString, NSURL;
+@class HAKIPConnection, NSString, NSURL;
 
 @interface HAKHTTPRequestMessage : HAKHTTPMessage
 {
+    HAKIPConnection *_connection;
 }
 
-@property(readonly) BOOL isComplete;
-@property(readonly) BOOL isBodyComplete;
-@property(readonly) unsigned long long bodyLength;
-@property(readonly) NSURL *url;
-@property(readonly) NSString *method;
+@property(readonly, nonatomic) HAKIPConnection *connection; // @synthesize connection=_connection;
+@property(readonly, nonatomic) BOOL isComplete;
+@property(readonly, nonatomic) BOOL isBodyComplete;
+@property(readonly, nonatomic) unsigned long long bodyLength;
+@property(readonly, nonatomic) NSURL *url;
+@property(readonly, nonatomic) NSString *method;
 - (id)description;
-- (id)init;
+- (id)initWithConnection:(id)arg1;
 
 @end
 

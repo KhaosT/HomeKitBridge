@@ -4,9 +4,11 @@
 //     class-dump is Copyright (C) 1997-1998, 2000-2001, 2004-2013 by Steve Nygard.
 //
 
+@import Foundation;
 
+#import "HAKServiceDelegate.h"
 
-@class HAKAccessory, HAKUUID, NSArray, NSHashTable, NSMutableArray, NSNumber;
+@class HAKAccessory, HAKUUID;
 
 @interface HAKService : NSObject <NSCoding, NSCopying>
 {
@@ -15,34 +17,43 @@
     BOOL _primary;
     id <HAKServiceDelegate> _delegate;
     HAKAccessory *_accessory;
-    HAKUUID *_UUID;
+    HAKUUID *_type;
     NSNumber *_instanceID;
     NSObject<OS_dispatch_queue> *_workQueue;
 }
 
-+ (id)type;
++ (id)_nameUUID;
++ (id)characteristicsToFilter;
 @property(retain, nonatomic) NSObject<OS_dispatch_queue> *workQueue; // @synthesize workQueue=_workQueue;
-@property(nonatomic, getter=isPrimary) BOOL primary; // @synthesize primary=_primary;
+@property(readonly, nonatomic, getter=isPrimary) BOOL primary; // @synthesize primary=_primary;
 @property(copy, nonatomic) NSNumber *instanceID; // @synthesize instanceID=_instanceID;
-@property(retain, nonatomic) HAKUUID *UUID; // @synthesize UUID=_UUID;
+@property(retain, nonatomic) HAKUUID *type; // @synthesize type=_type;
 @property(nonatomic) __weak HAKAccessory *accessory; // @synthesize accessory=_accessory;
 @property(nonatomic) __weak id <HAKServiceDelegate> delegate; // @synthesize delegate=_delegate;
 @property(retain, nonatomic) NSArray *characteristics; // @synthesize characteristics=_characteristics;
+- (BOOL)_removeIncludedService:(id)arg1;
 - (void)removeIncludedService:(id)arg1;
+- (BOOL)_addIncludedService:(id)arg1;
 - (void)addIncludedService:(id)arg1;
 @property(readonly, nonatomic) NSArray *includedServices;
 - (id)characteristicWithType:(id)arg1;
 - (id)characteristicWithInstanceId:(unsigned long long)arg1;
 - (void)removeAllCharacteristicsWithType:(id)arg1;
+- (BOOL)_removeCharacteristic:(id)arg1;
 - (void)removeCharacteristic:(id)arg1;
+- (BOOL)_addCharacteristic:(id)arg1 error:(id *)arg2;
 - (void)addCharacteristic:(id)arg1;
+@property(readonly, copy, nonatomic) NSString *name;
 - (id)description;
 - (void)encodeWithCoder:(id)arg1;
 - (id)initWithCoder:(id)arg1;
 - (id)copyWithZone:(struct _NSZone *)arg1;
-- (id)initWithType:(id)arg1;
+- (id)initWithType:(id)arg1 isPrimary:(BOOL)arg2 name:(id)arg3 characteristics:(id)arg4 includedServices:(id)arg5;
+- (id)initWithType:(id)arg1 name:(id)arg2;
 - (id)init;
 - (id)JSONObject;
+- (id)cbMutableService;
+- (id)cbCharactersitics;
 
 @end
 

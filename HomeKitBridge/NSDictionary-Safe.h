@@ -7,8 +7,10 @@
 #import "NSDictionary.h"
 
 @interface NSDictionary (Safe)
+- (id)_objectForKey:(id)arg1 class:(Class)arg2;
 - (id)stringForKey:(id)arg1;
 - (id)numberForKey:(id)arg1;
+- (id)dictionaryForKey:(id)arg1;
 - (id)arrayForKey:(id)arg1;
 @end
 

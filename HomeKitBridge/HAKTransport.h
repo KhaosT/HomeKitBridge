@@ -4,40 +4,78 @@
 //     class-dump is Copyright (C) 1997-1998, 2000-2001, 2004-2013 by Steve Nygard.
 //
 
+@import Foundation;
 
 #import "HAKAccessoryDelegate.h"
-#import "HAKPairingSessionDelegate.h"
+#import "HAKConnectionDelegate.h"
 
-@class HAKInstanceIDPool, HAKTransportManager, NSArray, NSMutableArray, NSString;
 
-@interface HAKTransport : NSObject <NSCopying, NSCoding, HAKPairingSessionDelegate, HAKAccessoryDelegate>
+
+@class HAKAccessory, HAKAccessoryKeychainObject, HAKIdentifier, HAKInstanceIDPool, NSArray, NSMutableArray, NSNumber, NSString;
+
+@interface HAKTransport : NSObject <HAKConnectionDelegate, HAKAccessoryDelegate, NSCopying, NSCoding>
 {
+    NSMutableArray *_pairings;
     NSMutableArray *_accessories;
+    NSMutableArray *_connections;
     BOOL _started;
+    BOOL _paired;
+    BOOL _allowUnencryptedConnections;
     NSString *_password;
-    NSString *_name;
-    NSString *_identifier;
-    HAKTransportManager *_transportManager;
-    HAKInstanceIDPool *_instanceIDPool;
+    HAKIdentifier *_identifier;
+    NSNumber *_configurationNumber;
+    NSNumber *_stateNumber;
     NSObject<OS_dispatch_queue> *_workQueue;
+    HAKInstanceIDPool *_instanceIDPool;
+    HAKAccessoryKeychainObject *_accessoryKey;
 }
 
 + (id)restrictedPasswordSet;
-@property(retain, nonatomic) NSObject<OS_dispatch_queue> *workQueue; // @synthesize workQueue=_workQueue;
++ (unsigned long long)maxSupportedAccessories;
++ (id)transportWithType:(unsigned long long)arg1;
+@property(retain, nonatomic) HAKAccessoryKeychainObject *accessoryKey; // @synthesize accessoryKey=_accessoryKey;
 @property(retain, nonatomic) HAKInstanceIDPool *instanceIDPool; // @synthesize instanceIDPool=_instanceIDPool;
-@property(nonatomic) __weak HAKTransportManager *transportManager; // @synthesize transportManager=_transportManager;
+@property(readonly, nonatomic) BOOL allowUnencryptedConnections; // @synthesize allowUnencryptedConnections=_allowUnencryptedConnections;
+@property(retain, nonatomic) NSObject<OS_dispatch_queue> *workQueue; // @synthesize workQueue=_workQueue;
+@property(nonatomic, getter=isPaired) BOOL paired; // @synthesize paired=_paired;
+@property(retain, nonatomic) NSNumber *stateNumber; // @synthesize stateNumber=_stateNumber;
+@property(retain, nonatomic) NSNumber *configurationNumber; // @synthesize configurationNumber=_configurationNumber;
+//@property(nonatomic) __weak id <HAKTransportDelegate> delegate; // @synthesize delegate=_delegate;
+@property(retain, nonatomic) NSArray *connections; // @synthesize connections=_connections;
+@property(retain, nonatomic) NSArray *pairings; // @synthesize pairings=_pairings;
 @property(retain, nonatomic) NSArray *accessories; // @synthesize accessories=_accessories;
+- (id)_accessoryWithInstanceID:(unsigned long long)arg1;
 - (id)accessoryWithInstanceID:(unsigned long long)arg1;
 - (void)removeAccessory:(id)arg1;
+- (BOOL)_addAccessory:(id)arg1 error:(id *)arg2;
 - (void)addAccessory:(id)arg1;
+@property(readonly, nonatomic) HAKAccessory *primaryAccessory;
+- (void)removeAllConnections;
+- (void)removeConnection:(id)arg1;
+- (void)addConnection:(id)arg1;
+- (id)_pairingWithIdentifier:(id)arg1;
+- (id)pairingWithIdentifier:(id)arg1;
+- (void)removeAllPairings;
+- (BOOL)_removePairing:(id)arg1 error:(id *)arg2;
+- (BOOL)removePairing:(id)arg1 error:(id *)arg2;
+- (BOOL)_addPairing:(id)arg1;
+- (void)addPairing:(id)arg1;
+- (void)_incrementStateNumber;
+- (void)incrementStateNumber;
+- (void)_incrementConfigurationNumber;
+- (void)incrementConfigurationNumber;
 @property(nonatomic, getter=isStarted) BOOL started; // @synthesize started=_started;
-@property(copy, nonatomic) NSString *identifier; // @synthesize identifier=_identifier;
-@property(copy, nonatomic) NSString *name; // @synthesize name=_name;
+- (void)_setIdentifier:(id)arg1;
+@property(copy, nonatomic) HAKIdentifier *identifier; // @synthesize identifier=_identifier;
+@property(readonly, nonatomic) NSString *name;
+@property(readonly, nonatomic) unsigned long long type;
 - (BOOL)updateValue:(id)arg1 forCharacteristic:(id)arg2 onSubscribedConnections:(id)arg3;
 - (void)stop;
 - (void)start;
 - (void)_setPassword:(id)arg1;
 @property(copy, nonatomic) NSString *password; // @synthesize password=_password;
+- (void)connectionDidEncrypt:(id)arg1;
+- (void)connectionDidClose:(id)arg1;
 - (void)accessory:(id)arg1 didUpdateValue:(id)arg2 forCharacteristic:(id)arg3;
 - (void)accessory:(id)arg1 didUpdateService:(id)arg2;
 - (void)accessory:(id)arg1 didRemoveService:(id)arg2;
@@ -45,11 +83,12 @@
 - (void)encodeWithCoder:(id)arg1;
 - (id)initWithCoder:(id)arg1;
 - (id)copyWithZone:(struct _NSZone *)arg1;
+@property(readonly, copy) NSString *description;
 - (id)init;
+- (id)initWithTransportType:(unsigned long long)arg1;
 
 // Remaining properties
 @property(readonly, copy) NSString *debugDescription;
-@property(readonly, copy) NSString *description;
 @property(readonly) unsigned long long hash;
 @property(readonly) Class superclass;
 

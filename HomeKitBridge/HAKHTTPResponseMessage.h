@@ -13,20 +13,20 @@
     NSString *_statusDescription;
 }
 
-@property(readonly) NSString *statusDescription; // @synthesize statusDescription=_statusDescription;
+@property(readonly, nonatomic) NSString *statusDescription; // @synthesize statusDescription=_statusDescription;
 - (void)setDateToNow;
-@property(retain) NSDate *date;
-@property(retain) NSString *contentType;
-@property unsigned long long contentLength;
+@property(retain, nonatomic) NSDate *date;
+@property(retain, nonatomic) NSString *contentType;
+@property(nonatomic) unsigned long long contentLength;
 - (void)setValue:(id)arg1 forHeaderField:(id)arg2;
-@property(retain) NSData *body;
-@property(readonly) unsigned long long statusCode;
+@property(retain, nonatomic) NSData *body;
+@property(readonly, nonatomic) unsigned long long statusCode;
 - (id)description;
-- (id)initWithStatusCode:(unsigned long long)arg1 statusDescription:(id)arg2 httpVersion:(id)arg3;
-- (id)initWithStatusCode:(unsigned long long)arg1;
+- (id)initWithRequest:(id)arg1 statusCode:(unsigned long long)arg2 statusDescription:(id)arg3 httpVersion:(id)arg4;
+- (id)initWithRequest:(id)arg1 statusCode:(unsigned long long)arg2;
 - (id)init;
-@property(retain) id JSONObject;
-@property(retain) NSData *tlv8Data;
+@property(retain, nonatomic) id JSONObject;
+@property(retain, nonatomic) NSData *tlv8Data;
 
 @end
 

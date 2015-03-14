@@ -4,6 +4,7 @@
 //     class-dump is Copyright (C) 1997-1998, 2000-2001, 2004-2013 by Steve Nygard.
 //
 
+@import Foundation;
 
 @class NSData;
 
@@ -15,7 +16,6 @@
     unsigned long long _controllerToAccessoryCount;
 }
 
-- (id)decryptPacket:(id)arg1;
 - (id)encryptData:(id)arg1;
 - (id)initWithSharedSecret:(id)arg1;
 

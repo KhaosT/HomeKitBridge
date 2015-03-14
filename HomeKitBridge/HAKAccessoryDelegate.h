@@ -4,14 +4,16 @@
 //     class-dump is Copyright (C) 1997-1998, 2000-2001, 2004-2013 by Steve Nygard.
 //
 
+@import Foundation;
 
-@class HAKAccessory, HAKService;
+@class HAKAccessory, HAKService, NSError;
 
 @protocol HAKAccessoryDelegate <NSObject>
 
 @optional
 - (void)accessory:(HAKAccessory *)arg1 didUpdateService:(HAKService *)arg2;
 - (void)accessory:(HAKAccessory *)arg1 didRemoveService:(HAKService *)arg2;
+- (void)accessory:(HAKAccessory *)arg1 didFailToAddService:(HAKService *)arg2 error:(NSError *)arg3;
 - (void)accessory:(HAKAccessory *)arg1 didAddService:(HAKService *)arg2;
 @end
 

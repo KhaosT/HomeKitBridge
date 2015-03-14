@@ -8,27 +8,18 @@
 
 #import "OTIHAPCore.h"
 
-#import "HAKTransportManager.h"
 #import "HAKIPTransport.h"
 #import "HAKAccessory.h"
 
-#import "HAKNameCharacteristic.h"
-#import "HAKModelCharacteristic.h"
-#import "HAKManufacturerCharacteristic.h"
-#import "HAKSerialNumberCharacteristic.h"
-#import "HAKBrightnessCharacteristic.h"
-#import "HAKHueCharacteristic.h"
-#import "HAKSaturationCharacteristic.h"
-#import "HAKOnCharacteristic.h"
-
-#import "HAKLightBulbService.h"
-
+#import "HAKAccessoryInformationService.h"
+#import "HAKService.h"
+#import "HAKCharacteristic.h"
+#import "HAKUUID.h"
 
 @interface OTIHAPCore (){
     BOOL        _isBridge;
 }
 
-@property (strong,nonatomic) HAKTransportManager        *transportManager;
 @property (strong,nonatomic) HAKIPTransport             *bridgeTransport;
 @property (strong,nonatomic) NSMutableDictionary        *accessories;
 
@@ -45,17 +36,13 @@
         
         if ([fileManager fileExistsAtPath:[[self homeDataPath] path]])
         {
-            _transportManager = [[HAKTransportManager alloc]initWithURL:[self homeDataPath]];
-            for (HAKIPTransport *transport in _transportManager.transports) {
-                _bridgeTransport = transport;
-                if (_bridgeTransport) {
-                    NSLog(@"Find Transport");
-                    for (HAKAccessory *accessory in _bridgeTransport.accessories) {
-                        [_accessories setObject:accessory forKey:accessory.serialNumber];
-                    }
+            _bridgeTransport = [NSKeyedUnarchiver unarchiveObjectWithFile:[[self homeDataPath] path]];
+            if (_bridgeTransport) {
+                NSLog(@"Find Transport");
+                for (HAKAccessory *accessory in _bridgeTransport.accessories) {
+                    [_accessories setObject:accessory forKey:accessory.serialNumber];
                 }
             }
-            NSLog(@"Restore:%@",_transportManager);
         }else{
             [self setupHAP];
         }
@@ -74,7 +61,7 @@
         [fileManager createDirectoryAtPath:[appSupportDir path] withIntermediateDirectories:NO attributes:nil error:nil];
     }
     
-    return [appSupportDir URLByAppendingPathComponent:@"HomeData.plist"];
+    return [appSupportDir URLByAppendingPathComponent:@"HomeDataV2.plist"];
 }
 
 - (id)initAsBridge:(BOOL)isBridge {
@@ -88,31 +75,22 @@
     return self;
 }
 
-- (void)setupHAP {
-    _transportManager = [HAKTransportManager transportManager];
-    
+- (void)startTransport {
+    [_bridgeTransport start];
+}
+
+- (void)setupHAP {    
     _bridgeTransport = [[HAKIPTransport alloc] init];
-    _bridgeTransport.name = @"Hue Bridge";
-    
-    [_transportManager addTransport:_bridgeTransport];
-    
-    [_transportManager startAllTransports];
     
     NSLog(@"Finished. Password:%@", _bridgeTransport.password);
-    
-    [_transportManager writeToURL:[self homeDataPath] atomically:YES];
 }
 
 - (void)setupBridgeAccessory {
     HAKAccessory *bridgeAccessory = [[HAKAccessory alloc] init];
-    HAKAccessoryInformationService *infoService = [[HAKAccessoryInformationService alloc] init];
-    infoService.nameCharacteristic.name = @"Hue Bridge";
-    infoService.serialNumberCharacteristic.serialNumber = @"972BB8AF";
-    infoService.manufacturerCharacteristic.manufacturer = @"Philips";
-    infoService.modelCharacteristic.model = @"Hue Bridge";
-    
-    bridgeAccessory.accessoryInformationService = infoService;
-    [bridgeAccessory addService:infoService];
+    bridgeAccessory.name = @"Hue Bridge";
+    bridgeAccessory.manufacturer = @"Philips";
+    bridgeAccessory.serialNumber = @"F7B47CD5EA72";
+    bridgeAccessory.model = @"Hue Bridge";
     
     [self addAccessory:bridgeAccessory];
 }
@@ -131,7 +109,7 @@
     
     [_bridgeTransport addAccessory:accessory];
     
-    [_transportManager writeToURL:[self homeDataPath] atomically:YES];
+    [NSKeyedArchiver archiveRootObject:_bridgeTransport toFile:[[self homeDataPath] path]];
     
     return accessory;
 }
@@ -139,48 +117,34 @@
 - (HAKAccessory *)createHueAccessoryWithUUID:(NSString *)uuid Name:(NSString *)name {
     NSLog(@"Init Accessory With UUID:%@, name:%@",uuid,name);
     HAKAccessory *hueAccessory = [[HAKAccessory alloc]init];
+    hueAccessory.name = name;
+    hueAccessory.serialNumber = uuid;
+    hueAccessory.manufacturer = @"Philips";
+    hueAccessory.model = @"Hue 01";
     
-    HAKAccessoryInformationService *infoService = [[HAKAccessoryInformationService alloc] init];
-    infoService.nameCharacteristic.name = [name copy];
-    infoService.serialNumberCharacteristic.serialNumber = uuid;
-    infoService.manufacturerCharacteristic.manufacturer = @"Philips";
-    infoService.modelCharacteristic.model = @"Hue 01";
-    
-    hueAccessory.accessoryInformationService = infoService;
-    [hueAccessory addService:infoService];
     [hueAccessory addService:[self setupLightService]];
     
     return hueAccessory;
 }
 
-- (HAKService *)setupLightService {  
-    HAKLightBulbService *service = [[HAKLightBulbService alloc] init];
+- (HAKService *)setupLightService {
+    HAKService* lightService = [[HAKService alloc] initWithType:[[HAKUUID alloc] initWithUUIDString:@"00000043"] name:@"Light Control"];
     
-    service.nameCharacteristic = [[HAKNameCharacteristic alloc] init];
-    service.hueCharacteristic = [[HAKHueCharacteristic alloc] init];
-    service.brightnessCharacteristic = [[HAKBrightnessCharacteristic alloc] init];
-    service.saturationCharacteristic = [[HAKSaturationCharacteristic alloc] init];
+    HAKCharacteristic* powerCharacteristic = [lightService characteristicWithType:[[HAKUUID alloc] initWithUUIDString:@"00000025"]];
+    HAKCharacteristic* saturationCharacteristic = [[HAKCharacteristic alloc] initWithType:[[HAKUUID alloc] initWithUUIDString:@"0000002F"]];
+    HAKCharacteristic* hueCharacteristic = [[HAKCharacteristic alloc] initWithType:[[HAKUUID alloc] initWithUUIDString:@"00000013"]];
+    HAKCharacteristic* brightnessCharacteristic = [[HAKCharacteristic alloc] initWithType:[[HAKUUID alloc] initWithUUIDString:@"00000008"]];
     
-    HAKNameCharacteristic *name = service.nameCharacteristic;
-    name.name = @"Hue Light";
-    HAKBrightnessCharacteristic *brightness = service.brightnessCharacteristic;
-    brightness.minimumValue = @0;
-    brightness.maximumValue = @254;
-    HAKHueCharacteristic *hue = service.hueCharacteristic;
-    hue.minimumValue = @0;
-    hue.maximumValue = @65535;
-    HAKSaturationCharacteristic *sat = service.saturationCharacteristic;
-    sat.minimumValue = @0;
-    sat.maximumValue = @254;
-    HAKOnCharacteristic *state = service.onCharacteristic;
+    powerCharacteristic.value = @0;
+    saturationCharacteristic.value = @0;
+    hueCharacteristic.value = @0;
+    brightnessCharacteristic.value = @0;
     
-    [service addCharacteristic:name];
-    [service addCharacteristic:brightness];
-    [service addCharacteristic:sat];
-    [service addCharacteristic:hue];
-    [service addCharacteristic:state];
+    [lightService addCharacteristic:hueCharacteristic];
+    [lightService addCharacteristic:brightnessCharacteristic];
+    [lightService addCharacteristic:saturationCharacteristic];
     
-    return service;
+    return lightService;
 }
 
 - (NSString *)password {

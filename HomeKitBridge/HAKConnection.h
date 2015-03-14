@@ -4,33 +4,31 @@
 //     class-dump is Copyright (C) 1997-1998, 2000-2001, 2004-2013 by Steve Nygard.
 //
 
+@import Foundation;
 
-#import "HAKPairVerifySessionDelegate.h"
+@class HAKPairing, HAKSecuritySession, HAKTransport, NSString;
 
-@class HAKPairingSession, HAKSecuritySession, NSString;
-
-@interface HAKConnection : NSObject <HAKPairVerifySessionDelegate>
+@interface HAKConnection : NSObject
 {
-    HAKPairingSession *_pairingSession;
+    BOOL _open;
+    id <HAKConnectionDelegate> _delegate;
+    HAKTransport *_transport;
+    HAKPairing *_pairing;
     HAKSecuritySession *_securitySession;
-    NSObject<OS_dispatch_queue> *_workQueue;
-    id <HAKPairingSessionDelegate> _pairingDelegate;
 }
 
-@property(nonatomic) __weak id <HAKPairingSessionDelegate> pairingDelegate; // @synthesize pairingDelegate=_pairingDelegate;
-@property(retain, nonatomic) NSObject<OS_dispatch_queue> *workQueue; // @synthesize workQueue=_workQueue;
-@property(readonly, nonatomic) HAKSecuritySession *securitySession; // @synthesize securitySession=_securitySession;
-@property(readonly, nonatomic) HAKPairingSession *pairingSession; // @synthesize pairingSession=_pairingSession;
+@property(retain, nonatomic) HAKSecuritySession *securitySession; // @synthesize securitySession=_securitySession;
+@property(nonatomic, getter=isOpen) BOOL open; // @synthesize open=_open;
+@property(nonatomic) __weak HAKPairing *pairing; // @synthesize pairing=_pairing;
+@property(readonly, nonatomic) __weak HAKTransport *transport; // @synthesize transport=_transport;
+@property __weak id <HAKConnectionDelegate> delegate; // @synthesize delegate=_delegate;
+- (BOOL)encryptWithIdentifier:(id)arg1 sharedSecret:(id)arg2;
+- (BOOL)close;
 @property(readonly, nonatomic, getter=isEncrypted) BOOL encrypted;
-- (void)pairingVerified:(id)arg1;
+@property(readonly, nonatomic) NSString *identifier;
+- (id)description;
 - (void)dealloc;
-- (id)init;
-
-// Remaining properties
-@property(readonly, copy) NSString *debugDescription;
-@property(readonly, copy) NSString *description;
-@property(readonly) unsigned long long hash;
-@property(readonly) Class superclass;
+- (id)initWithTransport:(id)arg1;
 
 @end
 

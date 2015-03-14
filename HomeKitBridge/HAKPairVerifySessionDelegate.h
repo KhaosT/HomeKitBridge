@@ -4,10 +4,11 @@
 //     class-dump is Copyright (C) 1997-1998, 2000-2001, 2004-2013 by Steve Nygard.
 //
 
+#import "HAKPairingSessionDelegate.h"
 
-@class NSData;
+@class HAKPairVerifySession, NSData, NSString;
 
-@protocol HAKPairVerifySessionDelegate <NSObject>
-- (void)pairingVerified:(NSData *)arg1;
+@protocol HAKPairVerifySessionDelegate <HAKPairingSessionDelegate>
+- (void)pairVerifySession:(HAKPairVerifySession *)arg1 verifiedPairingWithIdentifier:(NSString *)arg2 sharedSecret:(NSData *)arg3;
 @end
 

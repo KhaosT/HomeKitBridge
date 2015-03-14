@@ -4,10 +4,11 @@
 //     class-dump is Copyright (C) 1997-1998, 2000-2001, 2004-2013 by Steve Nygard.
 //
 
+@import Foundation;
 
-@class NSInputStream, NSOutputStream;
+@class NSHost, NSInputStream, NSOutputStream;
 
 @protocol HAKSocketDelegate <NSObject>
-- (void)newConnectionWithInputStream:(NSInputStream *)arg1 outputStream:(NSOutputStream *)arg2;
+- (void)newConnectionWithHost:(NSHost *)arg1 inputStream:(NSInputStream *)arg2 outputStream:(NSOutputStream *)arg3;
 @end
 

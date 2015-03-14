@@ -14,6 +14,7 @@
 @interface OTIHAPCore : NSObject
 
 - (id)initAsBridge:(BOOL)isBridge;
+- (void)startTransport;
 - (HAKAccessory *)addAccessory:(HAKAccessory *)accessory;
 - (HAKAccessory *)createHueAccessoryWithUUID:(NSString *)uuid Name:(NSString *)name;
 - (NSString *)password;

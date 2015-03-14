@@ -4,27 +4,34 @@
 //     class-dump is Copyright (C) 1997-1998, 2000-2001, 2004-2013 by Steve Nygard.
 //
 
+@import Foundation;
 
 @class NSMutableSet;
 
 @interface HAKLogger : NSObject
 {
+    BOOL _loggingDisabled;
+    BOOL _allowInternalLogging;
     unsigned long long _logLevel;
     NSObject<OS_dispatch_queue> *_loggerQueue;
     struct __asl_object_s *_aslClient;
     NSMutableSet *_loggerFileHandles;
 }
 
++ (void)_pruneOldLogs;
++ (id)logDirectory;
 + (id)defaultLogger;
++ (void)initialize;
 @property(retain, nonatomic) NSMutableSet *loggerFileHandles; // @synthesize loggerFileHandles=_loggerFileHandles;
 @property(setter=setASLClient:) struct __asl_object_s *aslClient; // @synthesize aslClient=_aslClient;
 @property(retain) NSObject<OS_dispatch_queue> *loggerQueue; // @synthesize loggerQueue=_loggerQueue;
+@property(nonatomic) BOOL allowInternalLogging; // @synthesize allowInternalLogging=_allowInternalLogging;
+@property(nonatomic, getter=isLoggingDisabled) BOOL loggingDisabled; // @synthesize loggingDisabled=_loggingDisabled;
 @property(nonatomic) unsigned long long logLevel; // @synthesize logLevel=_logLevel;
 - (void)logMessage:(id)arg1 level:(unsigned long long)arg2;
 - (void)logWithLevel:(unsigned long long)arg1 message:(id)arg2;
 - (BOOL)addLogFile:(id)arg1 error:(id *)arg2;
 - (void)addDefaultFileLogger;
-- (id)logDirectory;
 - (void)dealloc;
 - (id)init;
 

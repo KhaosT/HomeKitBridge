@@ -4,59 +4,73 @@
 //     class-dump is Copyright (C) 1997-1998, 2000-2001, 2004-2013 by Steve Nygard.
 //
 
-@class HAKService, HAKUUID, NSArray, NSHashTable, NSNumber, NSString;
+@import Foundation;
+
+@class HAKService, HAKUUID, HAKValueConstraints, NSArray, NSHashTable, NSNumber, NSString;
 
 @interface HAKCharacteristic : NSObject <NSCoding, NSCopying>
 {
     id _value;
-    BOOL _readable;
-    BOOL _writable;
-    BOOL _updatable;
     HAKService *_service;
-    HAKUUID *_UUID;
+    HAKUUID *_type;
     NSNumber *_instanceID;
     NSString *_manufacturerDescription;
     unsigned long long _properties;
+    unsigned long long _permissions;
     unsigned long long _format;
     unsigned long long _unit;
+    HAKValueConstraints *_constraints;
     NSObject<OS_dispatch_queue> *_workQueue;
     NSHashTable *_subscribedConnectionsTable;
 }
 
-+ (unsigned long long)properties;
-+ (id)type;
 + (id)stringForUnit:(unsigned long long)arg1;
 + (id)stringForFormat:(unsigned long long)arg1;
 @property(retain, nonatomic) NSHashTable *subscribedConnectionsTable; // @synthesize subscribedConnectionsTable=_subscribedConnectionsTable;
 @property(retain, nonatomic) NSObject<OS_dispatch_queue> *workQueue; // @synthesize workQueue=_workQueue;
-@property(nonatomic, getter=isUpdatable) BOOL updatable; // @synthesize updatable=_updatable;
-@property(nonatomic, getter=isWritable) BOOL writable; // @synthesize writable=_writable;
-@property(nonatomic, getter=isReadable) BOOL readable; // @synthesize readable=_readable;
+@property(copy, nonatomic) HAKValueConstraints *constraints; // @synthesize constraints=_constraints;
 @property(nonatomic) unsigned long long unit; // @synthesize unit=_unit;
-@property(nonatomic) unsigned long long format; // @synthesize format=_format;
-@property(nonatomic) unsigned long long properties; // @synthesize properties=_properties;
+@property(readonly, nonatomic) unsigned long long format; // @synthesize format=_format;
+@property(nonatomic) unsigned long long permissions; // @synthesize permissions=_permissions;
+@property(readonly, nonatomic) unsigned long long properties; // @synthesize properties=_properties;
 @property(copy, nonatomic) NSString *manufacturerDescription; // @synthesize manufacturerDescription=_manufacturerDescription;
 @property(copy, nonatomic) NSNumber *instanceID; // @synthesize instanceID=_instanceID;
-@property(retain, nonatomic) HAKUUID *UUID; // @synthesize UUID=_UUID;
-@property(nonatomic) HAKService *service; // @synthesize service=_service;
+@property(retain, nonatomic) HAKUUID *type; // @synthesize type=_type;
+@property(nonatomic) __weak HAKService *service; // @synthesize service=_service;
+//@property(nonatomic) __weak id <HAKCharacteristicDelegate> delegate; // @synthesize delegate=_delegate;
+- (BOOL)_handleValueValidation:(id)arg1;
+- (BOOL)validateValue:(id)arg1;
 - (void)_handleNotifyingSubscribedConnectionsValueUpdate:(id)arg1 exceptConnection:(id)arg2;
 - (void)_handleValueWrite:(id)arg1;
-- (void)handleValueUpdate:(id)arg1 connection:(id)arg2;
+- (id)handleWriteRequest:(id)arg1;
+- (id)handleReadRequest:(id)arg1;
 - (BOOL)unsubscribeConnection:(id)arg1;
 - (BOOL)subscribeConnection:(id)arg1;
-@property(readonly, retain, nonatomic) NSArray *subscribedConnections;
+- (id)_subscribedConnections;
+@property(readonly, nonatomic) NSArray *subscribedConnections;
 @property(copy, nonatomic) id value; // @synthesize value=_value;
 @property(readonly, nonatomic, getter=isNotifying) BOOL notifying;
 - (void)encodeWithCoder:(id)arg1;
 - (id)initWithCoder:(id)arg1;
 - (id)copyWithZone:(struct _NSZone *)arg1;
-- (id)initWithType:(id)arg1 properties:(unsigned long long)arg2;
+- (BOOL)isEqual:(id)arg1;
+- (unsigned long long)hash;
+- (id)_description;
+- (id)description;
+- (id)initWithType:(id)arg1 properties:(unsigned long long)arg2 format:(unsigned long long)arg3;
+- (id)initWithType:(id)arg1;
 - (id)init;
-- (id)responseJSONObjectWithMetadata:(BOOL)arg1 properties:(BOOL)arg2 type:(BOOL)arg3 events:(BOOL)arg4;
+- (id)responseJSONObjectWithReadRequest:(id)arg1 status:(long long *)arg2;
+- (id)responseJSONObjectWithMetadata:(BOOL)arg1 properties:(BOOL)arg2 type:(BOOL)arg3 events:(BOOL)arg4 cachedValue:(BOOL)arg5;
 - (id)propertiesJSONObject;
 - (id)JSONObject;
 - (id)transformJSONValue:(id)arg1;
+- (id)JSONTransformValue:(id)arg1;
 - (id)JSONValue;
+- (id)cbDecodeValue:(id)arg1;
+- (id)cbEncodeValue:(id)arg1;
+- (id)cbMutableCharacteristic;
+- (id)cbUserDescriptor;
 
 @end
 

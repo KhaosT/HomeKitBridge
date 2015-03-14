@@ -31,6 +31,7 @@
             
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
     _accessoryCore = [[OTIHAPCore alloc]initAsBridge:YES];
+    [_accessoryCore startTransport];
     
     _contentController = [[OTIContentController alloc]init];
     _contentController.view = _contentView;

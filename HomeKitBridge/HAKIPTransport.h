@@ -6,64 +6,54 @@
 
 #import "HAKTransport.h"
 
-#import "HAKHTTPConnectionDelegate.h"
+#import "HAKIPConnectionDelegate.h"
 #import "HAKSocketDelegate.h"
 
-@class HAKNetService, HAKSocket, NSMutableArray, NSNumber, NSString, NSThread;
+@class HAKNetService, HAKSocket, NSString, NSThread;
 
-@interface HAKIPTransport : HAKTransport <NSCoding, NSNetServiceDelegate, HAKHTTPConnectionDelegate, HAKSocketDelegate>
+@interface HAKIPTransport : HAKTransport <NSCoding, NSNetServiceDelegate, HAKIPConnectionDelegate, HAKSocketDelegate>
 {
     BOOL _dirty;
     BOOL _serverThreadShouldRun;
     HAKSocket *_socket;
     HAKNetService *_netService;
-    NSMutableArray *_connections;
     NSThread *_serverThread;
-    NSNumber *_configurationNumber;
-    NSNumber *_stateNumber;
 }
 
++ (unsigned long long)httpResponseCodeWithReadResponseStatus:(long long)arg1;
++ (unsigned long long)httpResponseCodeWithWriteResponseStatus:(long long)arg1;
++ (long long)ipErrorCodeWithReadResponseStatus:(long long)arg1;
++ (long long)ipErrorCodeWithWriteResponseStatus:(long long)arg1;
++ (unsigned long long)maxSupportedAccessories;
 @property BOOL serverThreadShouldRun; // @synthesize serverThreadShouldRun=_serverThreadShouldRun;
 @property(getter=isDirty) BOOL dirty; // @synthesize dirty=_dirty;
-@property(retain, nonatomic) NSNumber *stateNumber; // @synthesize stateNumber=_stateNumber;
-@property(retain, nonatomic) NSNumber *configurationNumber; // @synthesize configurationNumber=_configurationNumber;
 @property(retain, nonatomic) NSThread *serverThread; // @synthesize serverThread=_serverThread;
-@property(retain, nonatomic) NSMutableArray *connections; // @synthesize connections=_connections;
 @property(retain, nonatomic) HAKNetService *netService; // @synthesize netService=_netService;
 @property(retain, nonatomic) HAKSocket *socket; // @synthesize socket=_socket;
 - (void)serverThreadMain;
 - (void)removeSources;
-- (void)_removePairingWithConnection:(id)arg1 identifer:(id)arg2;
-- (void)_addPairingWithConnection:(id)arg1 identifer:(id)arg2 publicKey:(id)arg3;
-- (void)_handlePairingRequestWithConnection:(id)arg1 TLV8:(id)arg2;
-- (id)_characteristicWriteWithConnection:(id)arg1 attributes:(id)arg2 error:(char *)arg3;
-- (void)_handleCharacteristicWriteWithConnection:(id)arg1 body:(id)arg2;
-- (id)_characteristicReadWithAccessoryID:(unsigned long long)arg1 characteristicID:(unsigned long long)arg2 metadata:(BOOL)arg3 properties:(BOOL)arg4 type:(BOOL)arg5 events:(BOOL)arg6 error:(char *)arg7;
-- (void)_handleCharacteristicReadRequestWithConnection:(id)arg1 query:(id)arg2;
-- (void)_handleAllAccessoriesRequestWithConnection:(id)arg1;
-- (void)_postRequestWithConnection:(id)arg1 URL:(id)arg2 contentType:(id)arg3 body:(id)arg4;
-- (void)_putRequestWithConnection:(id)arg1 URL:(id)arg2 contentType:(id)arg3 body:(id)arg4;
-- (void)_getRequestWithConnection:(id)arg1 URL:(id)arg2;
-- (void)identify;
-- (id)primaryAccessory;
+- (id)_characteristicWriteWithConnection:(id)arg1 request:(id)arg2 characteristicWriteRequests:(id)arg3 attributes:(id)arg4 error:(char *)arg5;
+- (void)_handleCharacteristicWriteWithConnection:(id)arg1 request:(id)arg2;
+- (void)_handleCharacteristicReadRequest:(id)arg1;
+- (void)_handleAllAccessoriesRequestWithConnection:(id)arg1 request:(id)arg2;
+- (void)_postRequestWithConnection:(id)arg1 request:(id)arg2;
+- (void)_putRequestWithConnection:(id)arg1 request:(id)arg2;
+- (void)_getRequestWithConnection:(id)arg1 request:(id)arg2;
+- (void)identifyWithConnection:(id)arg1 request:(id)arg2;
 @property(readonly, nonatomic) unsigned long long port;
-- (void)removeAccessory:(id)arg1;
-- (void)addAccessory:(id)arg1;
 - (BOOL)updateValue:(id)arg1 forCharacteristic:(id)arg2 onSubscribedConnections:(id)arg3;
 - (void)stop;
 - (void)start;
+- (void)setPaired:(BOOL)arg1;
+- (void)setStateNumber:(id)arg1;
+- (void)setConfigurationNumber:(id)arg1;
 - (void)setIdentifier:(id)arg1;
+- (unsigned long long)type;
 - (void)netServiceDidStop:(id)arg1;
 - (void)netService:(id)arg1 didNotPublish:(id)arg2;
 - (void)netServiceDidPublish:(id)arg1;
-- (void)newConnectionWithInputStream:(id)arg1 outputStream:(id)arg2;
-- (BOOL)connectionShouldClose:(id)arg1;
-- (void)connection:(id)arg1 receivedRequest:(id)arg2;
-- (void)accessory:(id)arg1 didUpdateValue:(id)arg2 forCharacteristic:(id)arg3;
-- (void)accessory:(id)arg1 didUpdateService:(id)arg2;
-- (void)accessory:(id)arg1 didRemoveService:(id)arg2;
-- (void)accessory:(id)arg1 didAddService:(id)arg2;
-- (void)encodeWithCoder:(id)arg1;
+- (void)newConnectionWithHost:(id)arg1 inputStream:(id)arg2 outputStream:(id)arg3;
+- (void)connection:(id)arg1 didReceiveRequest:(id)arg2;
 - (id)initWithCoder:(id)arg1;
 - (void)dealloc;
 - (id)init;

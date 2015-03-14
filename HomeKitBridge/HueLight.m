@@ -9,17 +9,17 @@
 #import "HueLight.h"
 #import <CommonCrypto/CommonDigest.h>
 #import "HAKIdentifyCharacteristic.h"
-#import "HAKOnCharacteristic.h"
-#import "HAKHueCharacteristic.h"
-#import "HAKSaturationCharacteristic.h"
-#import "HAKBrightnessCharacteristic.h"
+#import "HAKCharacteristic.h"
+#import "HAKAccessory.h"
+#import "HAKService.h"
+#import "HAKUUID.h"
 
 @interface HueLight () {
-    HAKOnCharacteristic *_state;
-    HAKBrightnessCharacteristic *_brightness;
-    HAKHueCharacteristic    *_hue;
-    HAKSaturationCharacteristic *_saturation;
-    BOOL                        _pendingUpdate;
+    HAKCharacteristic* _state;
+    HAKCharacteristic* _brightness;
+    HAKCharacteristic* _hue;
+    HAKCharacteristic* _saturation;
+    BOOL               _pendingUpdate;
 }
 
 @end
@@ -39,7 +39,6 @@
         _accessoryCore = core;
         _huelight = hueLight;
         _lightAccesory = [_accessoryCore addAccessory:[self getLightAccessoryWithName:_huelight.name]];
-        [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(characteristicDidUpdateValueNotification:) name:@"HAKCharacteristicDidUpdateValueNotification" object:nil];
         [self processLightAccessory];
     }
     
@@ -47,24 +46,18 @@
 }
 
 - (void)processLightAccessory {
-    for (HAKService *service in _lightAccesory.services) {
-        for (HAKCharacteristic *characteristic in service.characteristics) {
-            if ([characteristic isKindOfClass:[HAKOnCharacteristic class]]) {
-                _state = (HAKOnCharacteristic *)characteristic;
-            }
-            
-            if ([characteristic isKindOfClass:[HAKBrightnessCharacteristic class]]) {
-                _brightness = (HAKBrightnessCharacteristic *)characteristic;
-            }
-            
-            if ([characteristic isKindOfClass:[HAKHueCharacteristic class]]) {
-                _hue = (HAKHueCharacteristic *)characteristic;
-            }
-            
-            if ([characteristic isKindOfClass:[HAKSaturationCharacteristic class]]) {
-                _saturation = (HAKSaturationCharacteristic *)characteristic;
-            }
-        }
+    HAKService* lightService = [_lightAccesory serviceWithType:[[HAKUUID alloc] initWithUUIDString:@"00000043"]];
+    if (lightService) {
+        _state = [lightService characteristicWithType:[[HAKUUID alloc] initWithUUIDString:@"00000025"]];
+        _brightness = [lightService characteristicWithType:[[HAKUUID alloc] initWithUUIDString:@"00000008"]];
+        _hue = [lightService characteristicWithType:[[HAKUUID alloc] initWithUUIDString:@"00000013"]];
+        _saturation = [lightService characteristicWithType:[[HAKUUID alloc] initWithUUIDString:@"0000002F"]];
+        
+        [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(characteristicDidUpdateValueNotification:) name:@"HAKCharacteristicDidUpdateValueNotification" object:_state];
+        [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(characteristicDidUpdateValueNotification:) name:@"HAKCharacteristicDidUpdateValueNotification" object:_brightness];
+        [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(characteristicDidUpdateValueNotification:) name:@"HAKCharacteristicDidUpdateValueNotification" object:_hue];
+        [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(characteristicDidUpdateValueNotification:) name:@"HAKCharacteristicDidUpdateValueNotification" object:_saturation];
+
     }
     
     [self updateLightValue];
@@ -73,20 +66,20 @@
 - (void)updateLightValue {
     if (!_pendingUpdate) {
         PHLightState *lightState = _huelight.lightState;
-        if (_brightness.brightness != lightState.brightness.longLongValue) {
-            _brightness.brightness = lightState.brightness.longLongValue;
+        if (_brightness.value != lightState.brightness) {
+            _brightness.value = @((lightState.brightness.floatValue/65535)*360.0);
         }
         
-        if (_hue.hue != lightState.hue.floatValue) {
-            _hue.hue = lightState.hue.floatValue;
+        if (_hue.value != lightState.hue) {
+            _hue.value = lightState.hue;
         }
         
-        if (_state.on != lightState.on.boolValue) {
-            _state.on = lightState.on.boolValue;
+        if (_state.value != lightState.on) {
+            _state.value = lightState.on;
         }
         
-        if (_saturation.saturation != lightState.saturation.floatValue) {
-            _saturation.saturation = lightState.saturation.floatValue;
+        if (_saturation.value != lightState.saturation) {
+            _saturation.value = lightState.saturation;
         }
     }else{
         _pendingUpdate = NO;
@@ -135,7 +128,7 @@
                 }
             }
         }
-        if ([characteristic isKindOfClass:[HAKOnCharacteristic class]]) {
+        if (characteristic == _state) {
             id value = aNote.userInfo[@"HAKCharacteristicValueKey"];
             if ([value isKindOfClass:[NSNumber class]]) {
                 dispatch_async(dispatch_get_global_queue(0, 0), ^{
@@ -154,17 +147,19 @@
                 });
             }
         }
-        if ([characteristic isKindOfClass:[HAKHueCharacteristic class]]) {
+        if (characteristic == _hue) {
             id value = aNote.userInfo[@"HAKCharacteristicValueKey"];
             if ([value isKindOfClass:[NSNumber class]]) {
                 dispatch_async(dispatch_get_global_queue(0, 0), ^{
                     if (![currentLightState.hue isEqualToNumber:value]) {
                         NSLog(@"UpdateHue:%@",value);
+                        int hueConverted = ([value intValue]/360.0)*65535;
+                        
                         _pendingUpdate = YES;
                         PHLightState *lightState = [[PHLightState alloc] init];
                         
-                        [lightState setHue:value];
-                        [currentLightState setHue:value];
+                        [lightState setHue:@(hueConverted)];
+                        [currentLightState setHue:@(hueConverted)];
                         [[[[PHOverallFactory alloc] init] bridgeSendAPI] updateLightStateForId:_huelight.identifier withLighState:lightState completionHandler:^(NSArray *errors) {
                             if (errors) {
                                 NSLog(@"ERROR:%@",errors);
@@ -174,7 +169,7 @@
                 });
             }
         }
-        if ([characteristic isKindOfClass:[HAKSaturationCharacteristic class]]) {
+        if (characteristic == _saturation) {
             id value = aNote.userInfo[@"HAKCharacteristicValueKey"];
             if ([value isKindOfClass:[NSNumber class]]) {
                 dispatch_async(dispatch_get_global_queue(0, 0), ^{
@@ -193,7 +188,7 @@
                 });
             }
         }
-        if ([characteristic isKindOfClass:[HAKBrightnessCharacteristic class]]) {
+        if (characteristic == _brightness) {
             id value = aNote.userInfo[@"HAKCharacteristicValueKey"];
             if ([value isKindOfClass:[NSNumber class]]) {
                 dispatch_async(dispatch_get_global_queue(0, 0), ^{

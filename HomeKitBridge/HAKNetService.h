@@ -6,7 +6,7 @@
 
 #import "NSNetService.h"
 
-@class NSString;
+@class NSObject<OS_dispatch_queue>, NSString;
 
 @interface HAKNetService : NSNetService
 {
@@ -19,16 +19,18 @@
 @property(nonatomic) unsigned char statusOptions;
 - (void)incrementStateNumber;
 @property(nonatomic) unsigned short stateNumber;
-@property(retain, nonatomic) NSString *protocolVersion;
-@property(retain, nonatomic) NSString *modelName;
-@property(retain, nonatomic) NSString *identifier;
+@property(nonatomic) unsigned long long protocolVersion;
+@property(copy, nonatomic) NSString *modelName;
+@property(copy, nonatomic) NSString *identifier;
 @property(nonatomic) unsigned char featureOptions;
 - (void)incrementConfigurationNumber;
 @property(nonatomic) unsigned short configurationNumber;
 - (id)txtRecordValueForKey:(id)arg1;
 - (void)setTXTRecordValue:(id)arg1 forKey:(id)arg2;
+- (BOOL)_setTXTRecord:(id)arg1;
 - (void)setTXTRecord:(id)arg1;
 - (id)txtRecord;
+- (void)publishWithOptions:(unsigned long long)arg1;
 - (id)initWithName:(id)arg1 port:(unsigned long long)arg2;
 
 @end

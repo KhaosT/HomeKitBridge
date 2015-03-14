@@ -10,18 +10,8 @@
 #import "NSBezierPath+BezierPathQuartzUtilities.h"
 #import <Quartz/Quartz.h>
 
-#import "HAKTransportManager.h"
-#import "HAKIPTransport.h"
-#import "HAKAccessory.h"
-
-#import "HAKNameCharacteristic.h"
 #import "HAKIdentifyCharacteristic.h"
-#import "HAKBrightnessCharacteristic.h"
-#import "HAKHueCharacteristic.h"
-#import "HAKSaturationCharacteristic.h"
-#import "HAKOnCharacteristic.h"
 
-#import "HAKKeychainService.h"
 #import <HueSDK_OSX/HueSDK.h>
 
 @interface OTIContentController () {

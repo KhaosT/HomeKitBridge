@@ -4,21 +4,14 @@
 //     class-dump is Copyright (C) 1997-1998, 2000-2001, 2004-2013 by Steve Nygard.
 //
 
-
-@class HAKPairSetupSession, HAKPairVerifySession;
+@import Foundation;
 
 @interface HAKPairingSession : NSObject
 {
-    HAKPairSetupSession *_pairSetupSession;
-    HAKPairVerifySession *_pairVerifySession;
-    id <HAKPairingSessionDelegate> _pairingDelegate;
 }
 
-@property(nonatomic) __weak id <HAKPairingSessionDelegate> pairingDelegate; // @synthesize pairingDelegate=_pairingDelegate;
-@property(readonly, nonatomic) HAKPairVerifySession *pairVerifySession; // @synthesize pairVerifySession=_pairVerifySession;
-- (id)handlePairVerify:(id)arg1;
-- (id)handlePairSetup:(id)arg1;
-- (id)init;
+- (id)handlePairingSessionReadRequest;
+- (long long)handlePairingSessionWriteRequest:(id)arg1;
 
 @end
 

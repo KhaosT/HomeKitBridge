@@ -4,8 +4,9 @@
 //     class-dump is Copyright (C) 1997-1998, 2000-2001, 2004-2013 by Steve Nygard.
 //
 
+@import Foundation;
 
-@class NSString;
+@class NSObject<OS_dispatch_queue>, NSString;
 
 @interface HAKKeychainService : NSObject
 {
@@ -18,6 +19,8 @@
 + (id)defaultKeychainService;
 @property(nonatomic, getter=isAuthenticationDisabled) BOOL authenticationDisabled; // @synthesize authenticationDisabled=_authenticationDisabled;
 @property(retain) NSObject<OS_dispatch_queue> *workQueue; // @synthesize workQueue=_workQueue;
+- (void)_executePrivledgedKeychainBlock:(CDUnknownBlockType)arg1;
+- (void)_executeKeychainBlock:(CDUnknownBlockType)arg1;
 - (int)_unlockWithPassword:(id)arg1;
 - (BOOL)unlock;
 - (int)_isUnlocked:(char *)arg1;
@@ -29,6 +32,9 @@
 - (int)_getPassword:(id *)arg1;
 - (int)_key:(id *)arg1 keyClass:(unsigned long long)arg2 account:(id)arg3 service:(id)arg4;
 - (id)keyWithKeyClass:(unsigned long long)arg1 account:(id)arg2 service:(id)arg3;
+- (int)_key:(id *)arg1 withKeyRef:(void *)arg2;
+- (int)_keys:(id *)arg1 keyClass:(unsigned long long)arg2 account:(id)arg3 service:(id)arg4;
+- (id)keysWithKeyClass:(unsigned long long)arg1 account:(id)arg2 service:(id)arg3;
 - (int)_removeKey:(id)arg1;
 - (BOOL)removeKey:(id)arg1 error:(id *)arg2;
 - (int)_addKey:(id)arg1;

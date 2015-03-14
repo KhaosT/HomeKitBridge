@@ -4,47 +4,47 @@
 //     class-dump is Copyright (C) 1997-1998, 2000-2001, 2004-2013 by Steve Nygard.
 //
 
+@import Foundation;
+#import "HAKService.h"
 
-#import "HAKServiceDelegate.h"
-#import "HAKAccessoryDelegate.h"
-#import "HAKAccessoryInformationService.h"
-
-@class HAKAccessoryInformationService, HAKInstanceIDPool, NSArray, NSHashTable, NSMutableArray, NSNumber, NSString;
-
-@interface HAKAccessory : NSObject <NSCopying, NSCoding, HAKServiceDelegate>
+@interface HAKAccessory : NSObject <NSCopying, NSCoding>
 {
     NSMutableArray *_services;
     NSNumber *_instanceID;
-    HAKInstanceIDPool *_instanceIDPool;
     NSHashTable *_transportRefs;
-    HAKAccessoryInformationService *_accessoryInformationService;
     NSObject<OS_dispatch_queue> *_workQueue;
 }
 
++ (id)pairingUUID;
++ (id)accessoryInformationUUID;
++ (id)servicesToFilter;
 @property(retain, nonatomic) NSObject<OS_dispatch_queue> *workQueue; // @synthesize workQueue=_workQueue;
-@property(nonatomic) __weak HAKAccessoryInformationService *accessoryInformationService; // @synthesize accessoryInformationService=_accessoryInformationService;
 @property(retain, nonatomic) NSHashTable *transportRefs; // @synthesize transportRefs=_transportRefs;
-@property(retain, nonatomic) HAKInstanceIDPool *instanceIDPool; // @synthesize instanceIDPool=_instanceIDPool;
+//@property(retain, nonatomic) HAKInstanceIDPool *instanceIDPool; // @synthesize instanceIDPool=_instanceIDPool;
 @property(retain, nonatomic) NSNumber *instanceID; // @synthesize instanceID=_instanceID;
-@property(nonatomic) __weak id <HAKAccessoryDelegate> delegate; // @synthesize delegate=_delegate;
+@property(nonatomic) __weak id delegate; // @synthesize delegate=_delegate;
 @property(retain, nonatomic) NSArray *services; // @synthesize services=_services;
-- (id)serialNumber;
-- (id)manufacturer;
-- (id)model;
-- (id)name;
+@property(copy, nonatomic) NSString *serialNumber;
+@property(copy, nonatomic) NSString *manufacturer;
+@property(copy, nonatomic) NSString *model;
+@property(copy, nonatomic) NSString *name;
+@property(readonly, nonatomic) __weak HAKService *accessoryInformationService;
 - (id)serviceWithType:(id)arg1;
 - (id)serviceWithInstanceId:(unsigned long long)arg1;
+- (BOOL)_removeService:(id)arg1;
 - (void)removeService:(id)arg1;
+- (BOOL)_addService:(id)arg1 error:(id *)arg2;
 - (void)addService:(id)arg1;
 - (void)removeTransport:(id)arg1;
 - (void)addTransport:(id)arg1;
-@property(readonly, retain, nonatomic) NSArray *transports;
+@property(readonly, nonatomic) NSArray *transports;
 - (void)_handleUpdatedService:(id)arg1;
 - (void)service:(id)arg1 didRemoveCharacteristic:(id)arg2;
 - (void)service:(id)arg1 didAddCharacteristic:(id)arg2;
 - (void)encodeWithCoder:(id)arg1;
 - (id)initWithCoder:(id)arg1;
 - (id)copyWithZone:(struct _NSZone *)arg1;
+- (id)initWithAccessoryInformationService:(id)arg1 pairingService:(id)arg2;
 - (id)init;
 - (id)characteristicWithInstanceId:(unsigned long long)arg1;
 - (id)JSONObject;

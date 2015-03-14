@@ -4,14 +4,21 @@
 //     class-dump is Copyright (C) 1997-1998, 2000-2001, 2004-2013 by Steve Nygard.
 //
 
+@import Foundation;
+
+
+
 
 @class NSMutableArray;
 
-@interface HAKTLV8Container : NSObject
+@interface HAKTLV8Container : NSObject <NSCopying, NSCoding>
 {
     NSMutableArray *_packets;
 }
 
+- (void)encodeWithCoder:(id)arg1;
+- (id)initWithCoder:(id)arg1;
+- (id)copyWithZone:(struct _NSZone *)arg1;
 - (id)numberForType:(unsigned char)arg1;
 - (void)setUnsignedLongLong:(unsigned long long)arg1 forType:(unsigned char)arg2;
 - (void)setUnsignedInt:(unsigned int)arg1 forType:(unsigned char)arg2;
@@ -22,6 +29,8 @@
 - (void)setString:(id)arg1 forType:(unsigned char)arg2;
 - (id)dataForType:(unsigned char)arg1;
 - (void)setData:(id)arg1 forType:(unsigned char)arg2;
+- (BOOL)voidForType:(unsigned char)arg1;
+- (void)setVoidType:(unsigned char)arg1;
 - (id)serialize;
 - (void)removePacketsWithType:(unsigned char)arg1;
 - (id)description;

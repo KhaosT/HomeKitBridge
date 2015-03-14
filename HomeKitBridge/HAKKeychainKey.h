@@ -4,12 +4,13 @@
 //     class-dump is Copyright (C) 1997-1998, 2000-2001, 2004-2013 by Steve Nygard.
 //
 
+@import Foundation;
 
 @class NSData, NSString;
 
 @interface HAKKeychainKey : NSObject
 {
-    struct OpaqueSecKeychainItemRef *_secItem;
+    void *_secItemRef;
     NSString *_label;
     NSString *_userDescription;
     unsigned long long _keyClass;
@@ -17,10 +18,12 @@
     NSString *_account;
     NSData *_privateKey;
     NSData *_publicKey;
+    id _userInfo;
 }
 
 + (id)typeFromKeyClass:(unsigned long long)arg1;
 + (unsigned long long)keyClassFromType:(id)arg1;
+@property(copy, nonatomic) id userInfo; // @synthesize userInfo=_userInfo;
 @property(readonly, copy, nonatomic) NSData *publicKey; // @synthesize publicKey=_publicKey;
 @property(readonly, copy, nonatomic) NSData *privateKey; // @synthesize privateKey=_privateKey;
 @property(copy, nonatomic) NSString *account; // @synthesize account=_account;
@@ -28,9 +31,11 @@
 @property(readonly, nonatomic) unsigned long long keyClass; // @synthesize keyClass=_keyClass;
 @property(copy, nonatomic) NSString *userDescription; // @synthesize userDescription=_userDescription;
 @property(copy, nonatomic) NSString *label; // @synthesize label=_label;
-@property(nonatomic) struct OpaqueSecKeychainItemRef *secItem; // @synthesize secItem=_secItem;
+@property(nonatomic) void *secItemRef; // @synthesize secItemRef=_secItemRef;
 - (id)attributes;
 - (BOOL)isEqual:(id)arg1;
+- (unsigned long long)hash;
+- (void)dealloc;
 - (id)initWithPublicKey:(id)arg1 privateKey:(id)arg2;
 - (id)initWithPrivateKey:(id)arg1;
 - (id)initWithPublicKey:(id)arg1;
