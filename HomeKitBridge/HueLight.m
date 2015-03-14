@@ -67,11 +67,11 @@
     if (!_pendingUpdate) {
         PHLightState *lightState = _huelight.lightState;
         if (_brightness.value != lightState.brightness) {
-            _brightness.value = @((lightState.brightness.floatValue/65535)*360.0);
+            _brightness.value = @((lightState.brightness.floatValue/254)*100.0);
         }
         
         if (_hue.value != lightState.hue) {
-            _hue.value = lightState.hue;
+            _hue.value = @((lightState.hue.floatValue/65535)*360.0);
         }
         
         if (_state.value != lightState.on) {
@@ -79,7 +79,7 @@
         }
         
         if (_saturation.value != lightState.saturation) {
-            _saturation.value = lightState.saturation;
+            _saturation.value = @((lightState.saturation.floatValue/254)*100.0);
         }
     }else{
         _pendingUpdate = NO;
@@ -175,10 +175,12 @@
                 dispatch_async(dispatch_get_global_queue(0, 0), ^{
                     if (![currentLightState.saturation isEqualToNumber:value]) {
                         NSLog(@"UpdateSaturation:%@",value);
+                        int satConverted = ([value intValue]/100.0)*254;
+                        
                         _pendingUpdate = YES;
                         PHLightState *lightState = [[PHLightState alloc] init];
-                        [lightState setSaturation:value];
-                        [currentLightState setSaturation:value];
+                        [lightState setSaturation:@(satConverted)];
+                        [currentLightState setSaturation:@(satConverted)];
                         [[[[PHOverallFactory alloc] init] bridgeSendAPI] updateLightStateForId:_huelight.identifier withLighState:lightState completionHandler:^(NSArray *errors) {
                             if (errors) {
                                 NSLog(@"ERROR:%@",errors);
@@ -194,10 +196,12 @@
                 dispatch_async(dispatch_get_global_queue(0, 0), ^{
                     if (![currentLightState.brightness isEqualToNumber:value]) {
                         NSLog(@"UpdateBrightness:%@",value);
+                        int brightConverted = ([value intValue]/100.0)*254;
+                        
                         _pendingUpdate = YES;
                         PHLightState *lightState = [[PHLightState alloc] init];
-                        [lightState setBrightness:value];
-                        [currentLightState setBrightness:value];
+                        [lightState setBrightness:@(brightConverted)];
+                        [currentLightState setBrightness:@(brightConverted)];
                         [[[[PHOverallFactory alloc] init] bridgeSendAPI] updateLightStateForId:_huelight.identifier withLighState:lightState completionHandler:^(NSArray *errors) {
                             if (errors) {
                                 NSLog(@"ERROR:%@",errors);
