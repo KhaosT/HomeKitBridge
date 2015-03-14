@@ -15,6 +15,7 @@
 
 - (id)initAsBridge:(BOOL)isBridge;
 - (void)startTransport;
+- (void)resetTransportPairings;
 - (HAKAccessory *)addAccessory:(HAKAccessory *)accessory;
 - (HAKAccessory *)createHueAccessoryWithUUID:(NSString *)uuid Name:(NSString *)name;
 - (NSString *)password;

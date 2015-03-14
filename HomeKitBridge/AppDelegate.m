@@ -57,4 +57,8 @@
     [[NSApplication sharedApplication] hide:self];
 }
 
+- (IBAction)resetPairings:(id)sender {
+    [_accessoryCore resetTransportPairings];
+}
+
 @end

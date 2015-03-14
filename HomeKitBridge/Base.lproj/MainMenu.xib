@@ -720,10 +720,21 @@
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
+                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Qal-jE-AvO">
+                        <rect key="frame" x="337" y="322" width="129" height="32"/>
+                        <buttonCell key="cell" type="push" title="Reset Pairings" bezelStyle="rounded" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="vze-yH-gDc">
+                            <behavior key="behavior" lightByContents="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="resetPairings:" target="Voe-Tx-rLC" id="83W-BX-ae3"/>
+                        </connections>
+                    </button>
                 </subviews>
                 <constraints>
                     <constraint firstItem="zO9-Ca-Wja" firstAttribute="leading" secondItem="tuK-lG-Xff" secondAttribute="trailing" constant="8" id="4Js-cx-sp4"/>
                     <constraint firstItem="Zuy-p7-EKM" firstAttribute="leading" secondItem="EiT-Mj-1SZ" secondAttribute="leading" constant="20" id="839-ut-gKB"/>
+                    <constraint firstItem="Qal-jE-AvO" firstAttribute="top" secondItem="EiT-Mj-1SZ" secondAttribute="top" constant="10" id="DEO-0u-GPz"/>
                     <constraint firstItem="c5J-1s-MoH" firstAttribute="top" secondItem="EiT-Mj-1SZ" secondAttribute="top" constant="10" id="Jpn-ro-enm"/>
                     <constraint firstAttribute="centerX" secondItem="zO9-Ca-Wja" secondAttribute="centerX" id="Tfz-Wq-jjV"/>
                     <constraint firstAttribute="centerY" secondItem="zO9-Ca-Wja" secondAttribute="centerY" id="URc-E6-uXr"/>
@@ -731,6 +742,7 @@
                     <constraint firstItem="c5J-1s-MoH" firstAttribute="leading" secondItem="EiT-Mj-1SZ" secondAttribute="leading" constant="10" id="hxo-HJ-HHI"/>
                     <constraint firstAttribute="bottom" secondItem="Zuy-p7-EKM" secondAttribute="bottom" constant="20" id="iaV-zm-aAf"/>
                     <constraint firstAttribute="trailing" secondItem="Zuy-p7-EKM" secondAttribute="trailing" constant="20" id="jSL-dT-wM4"/>
+                    <constraint firstAttribute="trailing" secondItem="Qal-jE-AvO" secondAttribute="trailing" constant="20" id="s1J-Rc-hTe"/>
                 </constraints>
             </view>
         </window>

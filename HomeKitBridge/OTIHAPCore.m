@@ -79,6 +79,11 @@
     [_bridgeTransport start];
 }
 
+- (void)resetTransportPairings {
+    [_bridgeTransport removeAllPairings];
+    [_bridgeTransport removeAllConnections];
+}
+
 - (void)setupHAP {    
     _bridgeTransport = [[HAKIPTransport alloc] init];
     
